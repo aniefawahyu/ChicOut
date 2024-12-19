@@ -58,20 +58,31 @@ class LoginController extends Controller
             //         return redirect()->route('master-home');
             //     }
             //     return redirect()->route('home');
-            } else {
+            // } 
+            else {
                 return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
             }
-        // } else {
-        //     $rules = [
-        //         'username' => 'required|unique:accounts,username',
-        //         'display_name' => 'required',
-        //         'password' => 'required|min:6',
-        //         'confirmPassword' => 'required|same:password',
-        //         'email' => 'required|email|unique:accounts,email',
-        //         'tel' => 'required|numeric',
-        //         'address' => 'required',
-        //     ];
-
+        } else {
+            $rules = [
+                'username' => 'required',
+                'display_name' => 'required',
+                'password' => 'required',
+                'confirmPassword' => 'required|same:password',
+                'email' => 'required|email',
+                'tel' => 'required|numeric',
+                'address' => 'required',
+            ];
+            $newAcc = Account::create([
+                "username" => $req->username,
+                "display_name" => $req->display_name,
+                "password" => $req->password,
+                "email" => $req->email,
+                "tel" => $req->tel,
+                "address" => $req->address,
+                "role" => "user",
+            ]);
+            return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
+        }
         //     $messages = [
         //         'username.required' => 'Username is required.',
         //         'username.unique' => 'Username is already in use.',
@@ -90,17 +101,9 @@ class LoginController extends Controller
 
         //     $validator = Validator::make($req->all(), $rules, $messages)->validate();
 
-        //     $newAcc = Account::create([
-        //         "username" => $req->username,
-        //         "display_name" => $req->display_name,
-        //         "password" => $req->password,
-        //         "email" => $req->email,
-        //         "tel" => $req->tel,
-        //         "address" => $req->address,
-        //         "role" => "user",
-        //     ]);
+           
 
-        //     return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
+            // return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
         // }
     }
 
