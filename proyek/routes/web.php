@@ -53,49 +53,49 @@ Route::prefix("ChicOut")->group(function () {
 
     Route::prefix("Master")->group(function () {
         Route::controller(MasterController::class)->group(function () {
-            Route::get('/', "getMasterHome")->middleware("custom:master")->name('master-home');
-            Route::post('/', "postMasterHome")->middleware("custom:master");
+            Route::get('/', "getMasterHome")->name('master-home');
+            Route::post('/', "postMasterHome");
 
-            Route::get('/ReportItem', [ExportController::class ,"excelItems"])->middleware("custom:master")->name('master-report-item');
+            Route::get('/ReportItem', [ExportController::class ,"excelItems"])->name('master-report-item');
 
             Route::get('/Transaction', function () {
                 return redirect()->route('master-home');
             });
-            Route::get('/Transaction/{id}', "getDtrans")->middleware("custom:master")->name('master-dtrans');
+            Route::get('/Transaction/{id}', "getDtrans")->name('master-dtrans');
 
             Route::get('/Category', function () {
                 return redirect()->route('master-category');
             });
-            Route::get('/Category/All', "getCategory")->middleware("custom:master")->name('master-category');
-            Route::get('/Category/{id}', "getCategoryCRU")->middleware("custom:master")->name('master-category-cru');
-            Route::post('/Category/{id}', "postCategoryCRU")->middleware("custom:master");
-            Route::get('/Category/Delete-Recover/{id}', "deleteCategory")->middleware("custom:master")->name('master-delete-category');
+            Route::get('/Category/All', "getCategory")->name('master-category');
+            Route::get('/Category/{id}', "getCategoryCRU")->name('master-category-cru');
+            Route::post('/Category/{id}', "postCategoryCRU");
+            Route::get('/Category/Delete-Recover/{id}', "deleteCategory")->name('master-delete-category');
 
             Route::get('/Payment', function () {
                 return redirect()->route('master-payment');
             });
-            Route::get('/Payment/All', "getPayment")->middleware("custom:master")->name('master-payment');
-            Route::get('/Payment/{id}', "getPaymentCRU")->middleware("custom:master")->name('master-payment-cru');
-            Route::post('/Payment/{id}', "postPaymentCRU")->middleware("custom:master");
-            Route::get('/Payment/Delete-Recover/{id}', "deletePayment")->middleware("custom:master")->name('master-delete-payment');
+            Route::get('/Payment/All', "getPayment")->name('master-payment');
+            Route::get('/Payment/{id}', "getPaymentCRU")->name('master-payment-cru');
+            Route::post('/Payment/{id}', "postPaymentCRU");
+            Route::get('/Payment/Delete-Recover/{id}', "deletePayment")->name('master-delete-payment');
 
             Route::get('/Item', function () {
                 return redirect()->route('master-item', ['name' => 'All']);
             });
-            Route::get('/Item/Category/{name}', "getItems")->middleware("custom:master")->name('master-item');
-            Route::get('/Item/{id}', "getInsertUpdate")->middleware("custom:master")->name('master-insert-update');
-            Route::post('/Item/{id}', "postInsertUpdate")->middleware("custom:master");
-            Route::get('/Item/Delete-Recover/{id}', "doDelete")->middleware("custom:master")->name('master-delete-recover');
+            Route::get('/Item/Category/{name}', "getItems")->name('master-item');
+            Route::get('/Item/{id}', "getInsertUpdate")->name('master-insert-update');
+            Route::post('/Item/{id}', "postInsertUpdate");
+            Route::get('/Item/Delete-Recover/{id}', "doDelete")->name('master-delete-recover');
 
             Route::get('/Account', function () {
                 return redirect()->route('master-account', ['search' => 'All']);
             });
-            Route::get('/Account/{search}', "getAccount")->middleware("custom:master")->name('master-account');
-            Route::get('/Account/Change-Role/{username}', "doRole")->middleware("custom:master")->name('master-account-role');
+            Route::get('/Account/{search}', "getAccount")->name('master-account');
+            Route::get('/Account/Change-Role/{username}', "doRole")->name('master-account-role');
 
 
-            Route::get('/Profile', "getProfile")->middleware("custom:master")->name('master-profile');
-            Route::post('/Profile', "postProfile")->middleware("custom:master");
+            Route::get('/Profile', "getProfile")->name('master-profile');
+            Route::post('/Profile', "postProfile");
         });
     });
 
