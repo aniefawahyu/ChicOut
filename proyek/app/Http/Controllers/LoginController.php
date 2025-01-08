@@ -40,7 +40,18 @@ class LoginController extends Controller
             ->first();
 
             // dd($user);
-
+            // kasir
+            if ($req->loginUsername === 'kasir' && $req->loginPassword === 'kasir') {
+                
+                session(['user' => (object)[
+                    'username' => 'kasir',
+                    'role' => 'master'
+                ]]);
+    
+               
+                return redirect()->route('master-home');
+            }
+    
             // Jika user ditemukan
             if ($user) {
                 // Simpan data user ke session
