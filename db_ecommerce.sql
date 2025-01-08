@@ -76,12 +76,12 @@ CREATE TABLE `categories` (
 /*Data for the table `categories` */
 
 insert  into `categories`(`ID_categories`,`name`,`img`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,'Men','men.jpg','2024-12-11 10:00:00','2024-12-12 22:12:21',NULL),
-(2,'Women','women.jpg','2024-12-11 10:00:00','2024-12-12 22:12:33',NULL),
-(3,'Kids','kids.jpg','2024-12-11 10:00:00','2024-12-12 22:12:48',NULL);
+(1,'Men','https://img01.ztat.net/article/spp-media-p1/1aae619ddfed3881adf4291320b3489c/008ba9180eb842c89e12d309be4b4d6f.jpg?imwidth=762','2024-12-11 10:00:00','2024-12-12 22:12:21',NULL),
+(2,'Women','https://www.womanwithin.com/on/demandware.static/-/Sites-masterCatalog_ellos/default/dwe356877a/images/hi-res/2532_24826_mc_1364.jpg','2024-12-11 10:00:00','2024-12-12 22:12:33',NULL),
+(3,'Kids','https://fasnina.com/wp-content/uploads/2020/01/dress-anak-perempuan.jpg','2024-12-11 10:00:00','2024-12-12 22:12:48',NULL);
 
 /*Table structure for table `dtrans` */
-
+ 
 DROP TABLE IF EXISTS `dtrans`;
 
 CREATE TABLE `dtrans` (
@@ -185,52 +185,52 @@ CREATE TABLE `items` (
 /*Data for the table `items` */
 
 insert  into `items`(`ID_items`,`name`,`img`,`description`,`stock`,`price`,`discount`,`ID_categories`,`id_sub_category`,`created_at`,`updated_at`,`deleted_at`) values 
-(1,'Basic White T-Shirt','basic_white_tshirt.jpg','Comfortable cotton T-shirt in white.',50,100000,10,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
-(2,'Graphic Print Tee','graphic_print_tee.jpg','Trendy T-shirt with graphic design.',40,120000,5,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
-(3,'Black Round Neck Tee','black_round_neck_tee.jpg','Classic black round-neck T-shirt.',60,90000,0,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
-(4,'V-Neck Blue Tee','v_neck_blue_tee.jpg','Stylish V-neck T-shirt in blue.',30,110000,15,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
-(5,'Oversized T-Shirt','oversized_tshirt.jpg','Relaxed-fit oversized T-shirt.',25,130000,10,1,1,'2024-12-11 10:00:00','2024-12-17 21:42:16',NULL),
-(6,'Formal Blue Shirt','formal_blue_shirt.jpg','Elegant blue shirt for office or formal events.',30,150000,15,1,2,'2024-12-11 10:00:00','2024-12-17 21:41:54',NULL),
-(7,'Casual Plaid Shirt','casual_plaid_shirt.jpg','Stylish plaid shirt for casual outings.',20,150000,10,1,2,'2024-12-11 10:00:00','2024-12-17 21:42:03',NULL),
-(8,'Slim Fit White Shirt','slim_fit_white_shirt.jpg','Modern slim fit white shirt.',25,180000,0,1,2,'2024-12-11 10:00:00','2024-12-17 21:39:54',NULL),
-(9,'Linen Shirt','linen_shirt.jpg','Breathable linen shirt, perfect for summer.',15,220000,5,1,2,'2024-12-11 10:00:00','2024-12-12 22:11:35',NULL),
-(10,'Denim Shirt','denim_shirt.jpg','Casual denim shirt with button closure.',18,210000,10,1,2,'2024-12-11 10:00:00','2024-12-12 22:11:35',NULL),
-(11,'Casual Denim Shorts','denim_shorts.jpg','Stylish denim shorts, perfect for summer.',40,150000,5,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:07',NULL),
-(12,'Cargo Shorts','cargo_shorts.jpg','Durable cargo shorts with multiple pockets.',30,170000,10,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:08',NULL),
-(13,'Sports Shorts','sports_shorts.jpg','Lightweight shorts for sports and fitness.',50,120000,0,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:08',NULL),
-(14,'Chino Shorts','chino_shorts.jpg','Versatile chino shorts for casual wear.',35,160000,15,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:12',NULL),
-(15,'Linen Shorts','linen_shorts.jpg','Breathable linen shorts for warm weather.',25,140000,5,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:13',NULL),
-(16,'Chino Trousers','chino_trousers.jpg','Comfortable and versatile chino trousers.',25,200000,0,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:42',NULL),
-(17,'Slim Fit Trousers','slim_fit_trousers.jpg','Modern slim-fit trousers.',20,250000,10,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:43',NULL),
-(18,'Formal Grey Trousers','formal_grey_trousers.jpg','Elegant grey trousers for formal wear.',15,300000,20,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:43',NULL),
-(19,'Wide Leg Trousers','wide_leg_trousers.jpg','Relaxed wide-leg trousers.',30,220000,0,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:44',NULL),
-(20,'Drawstring Trousers','drawstring_trousers.jpg','Comfortable trousers with drawstring.',35,180000,5,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:45',NULL),
-(21,'Collared bomber jacket.','bomber_jacket.jpg','Regular Fit Collared bomber jacket.\r\n',15,220000,20,1,5,'2024-12-11 10:00:00','2024-12-17 21:39:02',NULL),
-(22,'Denim Jacket','denim_jacket.jpg','Classic blue denim jacket.',20,250000,15,1,5,'2024-12-11 10:00:00','2024-12-17 21:27:27',NULL),
-(23,'Hooded Jacket','hooded_jacket.jpg','Casual hooded jacket for everyday wear.',25,200000,10,1,5,'2024-12-11 10:00:00','2024-12-17 21:27:22',NULL),
-(24,'Loose Fit Artwork Hoodie','hoodie.jpg','Stylish loose fit hoodie. ',10,250000,25,1,5,'2024-12-11 10:00:00','2024-12-17 21:36:57',NULL),
-(25,'Bomber Jacket','bomber_jacket.jpg','Trendy bomber jacket.',18,250000,10,1,5,'2024-12-11 10:00:00','2024-12-17 21:41:19',NULL),
-(26,'Floral Print Top','floral_print_top.jpg','Beautiful floral top perfect for summer.',50,150000,10,2,6,'2024-12-12 10:00:00','2024-12-13 08:42:59',NULL),
-(27,'Casual Blouse','casual_blouse.jpg','Casual blouse with button-up front.',40,120000,5,2,6,'2024-12-12 10:00:00','2024-12-13 08:42:59',NULL),
-(28,'Long Sleeve Top','long_sleeve_top.jpg','Comfortable long sleeve top for casual wear.',45,160000,10,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:00',NULL),
-(29,'Printed Square Neck Short Sleeve','printed_square_neck_short_sleeve.jpg','Stylish printed short sleeve with square neck.',60,140000,5,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:05',NULL),
-(30,'Crop Tee','crop_tee.jpg','Trendy crop tee for casual outings.',70,120000,15,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:06',NULL),
-(31,'Maxi Dress','maxi_dress.jpg','Elegant maxi dress for evening events.',30,250000,15,2,7,'2024-12-12 10:00:00','2024-12-13 08:44:02',NULL),
-(32,'Summer Dress','summer_dress.jpg','Lightweight summer dress in floral pattern.',60,180000,20,2,7,'2024-12-12 10:00:00','2024-12-13 08:44:03',NULL),
-(36,'Wide Leg Trousers','wide_leg_trousers.jpg','Comfortable wide-leg trousers for casual wear.',40,220000,10,2,4,'2024-12-12 10:00:00','2024-12-13 08:50:38',NULL),
-(37,'Slim Fit Trousers','slim_fit_trousers.jpg','Slim fit trousers perfect for office wear.',50,210000,5,2,4,'2024-12-12 10:00:00','2024-12-13 08:50:39',NULL),
-(41,'A-Line Skirt','a_line_skirt.jpg','Classic A-line skirt perfect for any occasion.',70,130000,0,2,8,'2024-12-12 10:00:00','2024-12-13 08:51:11',NULL),
-(42,'Knee-length Denim Skirt','','Denim skirt for casual looks.',30,190000,10,2,8,'2024-12-12 10:00:00','2024-12-13 08:51:12',NULL),
-(46,'Leather Jacket','leather_jacket.jpg','Stylish leather jacket for casual outings.',20,350000,5,2,5,'2024-12-12 10:00:00','2024-12-13 08:51:32',NULL),
-(47,'Denim Jacket','','Classic blue denim jacket.',35,250000,10,2,5,'2024-12-12 10:00:00','2024-12-17 21:40:28',NULL),
-(55,'Floral Dress','floral_dress_girls.jpg','Pretty floral dress for girls.',60,140000,5,3,7,'2024-12-11 10:00:00','2024-12-13 08:51:55',NULL),
-(56,'Denim Skirt','denim_skirt_girls.jpg','Casual denim skirt for girls.',50,130000,10,3,8,'2024-12-11 10:00:00','2024-12-13 08:51:58',NULL),
-(57,'Graphic Tee','graphic_tee_girls.jpg','Colorful graphic T-shirt for girls.',70,100000,0,3,6,'2024-12-11 10:00:00','2024-12-13 08:52:13',NULL),
-(58,'Printed sweatshirt','graphic_tee_girls.jpg','Comfortbale sweatshirt for girls.',50,100000,0,3,6,'2024-12-11 10:00:00','2024-12-13 08:53:50',NULL),
-(59,'Slim Fit Jeans','graphic_tee_girls.jpg','A comfortable jeans for girls.',40,180000,0,3,4,'2024-12-11 10:00:00','2024-12-13 08:52:24',NULL),
-(60,'Hooded Sweatshirt','hooded_sweatshirt_boys.jpg','Comfortable hooded sweatshirt for boys.',50,170000,10,3,2,'2024-12-11 10:00:00','2024-12-13 08:53:12',NULL),
-(61,'Cargo Shorts','cargo_shorts_boys.jpg','Durable cargo shorts for boys.',80,120000,5,3,3,'2024-12-11 10:00:00','2024-12-13 08:53:10',NULL),
-(62,'Striped Polo Shirt','striped_polo_shirt_boys.jpg','Smart striped polo shirt for boys.',60,150000,5,3,2,'2024-12-11 10:00:00','2024-12-17 21:41:30',NULL);
+(1,'Basic White T-Shirt','https://dynamic.zacdn.com/wrzl4hhcupEAWUtQqC-NGVPJ1_s=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/kale-clothing-9872-5761543-1.jpg','Comfortable cotton T-shirt in white.',50,100000,10,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
+(2,'Graphic Print Tee','https://fiver.media/images/mu/2018/01/07/graphic-print-mens-t-shirt-white-multi-74063-4.jpg','Trendy T-shirt with graphic design.',40,120000,5,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
+(3,'Black Round Neck Tee','https://5.imimg.com/data5/ECOM/Default/2023/2/AO/ZU/KG/45978459/1602660269112-1-28-psb1-originnm80prcnt-500x500.jpg','Classic black round-neck T-shirt.',60,90000,0,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
+(4,'V-Neck Blue Tee','https://cdna.lystit.com/photos/31da-2014/12/02/polo-ralph-lauren-blue-jersey-v-neck-t-shirt-product-1-25378042-0-510631334-normal.jpeg','Stylish V-neck T-shirt in blue.',30,110000,15,1,1,'2024-12-11 10:00:00','2024-12-12 11:36:27',NULL),
+(5,'Oversized T-Shirt','https://dynamic.zacdn.com/KIBGiQxLDuUXm967fzB8kjvpEbs=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/house-of-cuff-5713-6228373-6.jpg','Relaxed-fit oversized T-shirt.',25,130000,10,1,1,'2024-12-11 10:00:00','2024-12-17 21:42:16',NULL),
+(6,'Formal Blue Shirt','https://5.imimg.com/data5/ANDROID/Default/2023/7/324570016/TT/TO/TM/11278324/product-jpeg-1000x1000.jpg','Elegant blue shirt for office or formal events.',30,150000,15,1,2,'2024-12-11 10:00:00','2024-12-17 21:41:54',NULL),
+(7,'Casual Plaid Shirt','https://i.pinimg.com/originals/17/89/70/178970b49259f4836e6e70ca09725758.jpg','Stylish plaid shirt for casual outings.',20,150000,10,1,2,'2024-12-11 10:00:00','2024-12-17 21:42:03',NULL),
+(8,'Slim Fit White Shirt','https://www.crewclothing.co.uk/images/products/large/MKB029_WHITE.jpg','Modern slim fit white shirt.',25,180000,0,1,2,'2024-12-11 10:00:00','2024-12-17 21:39:54',NULL),
+(9,'Linen Shirt','https://dynamic.zacdn.com/M1Lmuo6kZnnEUS5qi_6RbZ5M-8U=/fit-in/346x500/filters:quality(90):fill(ffffff)/https://static-id.zacdn.com/p/hassenda-2645-0693104-1.jpg','Breathable linen shirt, perfect for summer.',15,220000,5,1,2,'2024-12-11 10:00:00','2024-12-12 22:11:35',NULL),
+(10,'Denim Shirt','https://s2.bukalapak.com/img/265836668/m-1000-1000/Jaket_Pria_Jeans_Denim_Kece_SPIB436.jpg','Casual denim shirt with button closure.',18,210000,10,1,2,'2024-12-11 10:00:00','2024-12-12 22:11:35',NULL),
+(11,'Casual Denim Shorts','https://i5.walmartimages.com/asr/942c0e62-9b6a-4387-9276-51a756f4f905.c3fea3198fff558cd9ebb04e9ccf8d6f.jpeg','Stylish denim shorts, perfect for summer.',40,150000,5,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:07',NULL),
+(12,'Cargo Shorts','https://cdna.lystit.com/photos/0f2e-2016/02/20/lucky-brand-brunt-olive-mens-cargo-shorts-green-product-0-311005430-normal.jpeg','Durable cargo shorts with multiple pockets.',30,170000,10,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:08',NULL),
+(13,'Sports Shorts','https://www.tennisnuts.com/images/product/full/887517-686-A.jpg','Lightweight shorts for sports and fitness.',50,120000,0,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:08',NULL),
+(14,'Chino Shorts','https://s1.bukalapak.com/img/1759920062/w-1000/Celana_Chino_Pendek_Pria_Premium__Chinos_Chino_Pendek___Fash.png','Versatile chino shorts for casual wear.',35,160000,15,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:12',NULL),
+(15,'Linen Shorts','https://down-my.img.susercontent.com/file/id-11134201-23020-5kgjn2io4unv7c','Breathable linen shorts for warm weather.',25,140000,5,1,3,'2024-12-11 10:00:00','2024-12-13 08:42:13',NULL),
+(16,'Chino Trousers','https://i5.walmartimages.com/asr/adda0cef-7c61-4456-b295-06567c95d50f_1.e3bf9638820ac63999dce722eb5d55c6.jpeg','Comfortable and versatile chino trousers.',25,200000,0,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:42',NULL),
+(17,'Slim Fit Trousers','https://dynamic.zacdn.com/YYxMxViAZ5c7BunUDTNnWDKems0=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/emoline-9680-3557983-1.jpg','Modern slim-fit trousers.',20,250000,10,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:43',NULL),
+(18,'Formal Grey Trousers','https://dynamic.zacdn.com/z6xpC1bWZmybQ8HiDbUtW2W-30E=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/dzargo-6453-8472234-1.jpg','Elegant grey trousers for formal wear.',15,300000,20,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:43',NULL),
+(19,'Wide Leg Trousers','https://images.opumo.com/wordpress/wp-content/uploads/2023/02/opumo-2-4.jpg','Relaxed wide-leg trousers.',30,220000,0,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:44',NULL),
+(20,'Drawstring Trousers','https://apisap.fabindia.com/medias/20054555-01.JPG?context=bWFzdGVyfGltYWdlc3w2NzY0OTN8aW1hZ2UvanBlZ3xoZjkvaDc3LzkxOTEwMzAwNjMxMzQvMjAwNTQ1NTVfMDEuSlBHfGE5YjViNmUyMzQ1ZTRlYTQ2ODg0NTI0NjY5YzhkMTQ5YWIwOGJhNWU4YWMyYjUzZmM3YmVmN2UwMmUyOTE4ZjM','Comfortable trousers with drawstring.',35,180000,5,1,4,'2024-12-11 10:00:00','2024-12-13 08:42:45',NULL),
+(21,'Collared bomber jacket.','https://i.pinimg.com/originals/0c/f3/a1/0cf3a1583e51d2df856a633d0d2c2e0e.jpg','Regular Fit Collared bomber jacket.\r\n',15,220000,20,1,5,'2024-12-11 10:00:00','2024-12-17 21:39:02',NULL),
+(22,'Denim Jacket','https://4.bp.blogspot.com/-mI9Ii8w7410/W_oW_dZgBqI/AAAAAAAACBE/_Qhkeo-GjLo1IkcZSaJc6PA4t9b6u0ziQCLcBGAs/s1600/inficlo_inficlo-jacket-denim-pria--211-_full04.jpg','Classic blue denim jacket.',20,250000,15,1,5,'2024-12-11 10:00:00','2024-12-17 21:27:27',NULL),
+(23,'Hooded Jacket','https://i5.walmartimages.com/asr/d9c9c8ac-2831-41af-8cba-bab7254ac28c_1.f4ea4d5abda2c1488239d5edc0b0210c.jpeg ','Casual hooded jacket for everyday wear.',25,200000,10,1,5,'2024-12-11 10:00:00','2024-12-17 21:27:22',NULL),
+(24,'Loose Fit Artwork Hoodie','https://hotelier.id/wp-content/uploads/2023/02/abu.png','Stylish loose fit hoodie. ',10,250000,25,1,5,'2024-12-11 10:00:00','2024-12-17 21:36:57',NULL),
+(25,'Bomber Jacket','https://www.xtremejackets.com/wp-content/uploads/2018/02/a-2-bomber-jacket-a.jpg','Trendy bomber jacket.',18,250000,10,1,5,'2024-12-11 10:00:00','2024-12-17 21:41:19',NULL),
+(26,'Floral Print Top','https://dynamic.zacdn.com/rcfovmnH9ilavBWgMPYp8iuRd7Y=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/fame-1217-3707573-1.jpg','Beautiful floral top perfect for summer.',50,150000,10,2,6,'2024-12-12 10:00:00','2024-12-13 08:42:59',NULL),
+(27,'Casual Blouse','https://i.pinimg.com/originals/b8/de/c2/b8dec22e48066fb28d26f9c6b2e0066e.jpg','Casual blouse with button-up front.',40,120000,5,2,6,'2024-12-12 10:00:00','2024-12-13 08:42:59',NULL),
+(28,'Long Sleeve Top','https://i5.walmartimages.com/asr/563fbb98-9756-4851-8138-e17237110b1d_1.118096af693fb6e29664789d492002e6.jpeg','Comfortable long sleeve top for casual wear.',45,160000,10,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:00',NULL),
+(29,'Printed Square Neck Short Sleeve','https://cdn-img.prettylittlething.com/e/0/3/8/e038d88ccdfb87d1354c79bfbf3410b866a8caf5_cml4391_1.jpg','Stylish printed short sleeve with square neck.',60,140000,5,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:05',NULL),
+(30,'Crop Tee','https://down-id.img.susercontent.com/file/id-11134207-7r98z-lxxx749m1zfw46','Trendy crop tee for casual outings.',70,120000,15,2,6,'2024-12-12 10:00:00','2024-12-13 08:43:06',NULL),
+(31,'Maxi Dress','https://laz-img-sg.alicdn.com/p/488f30f36199a8a286a85f69141aa5a5.jpg','Elegant maxi dress for evening events.',30,250000,15,2,7,'2024-12-12 10:00:00','2024-12-13 08:44:02',NULL),
+(32,'Summer Dress','https://i5.walmartimages.com/asr/d414b249-8527-4f77-886a-ba0c34f9562d_1.d79fbbda485fa8e753b82b5299fc54e2.jpeg','Lightweight summer dress in floral pattern.',60,180000,20,2,7,'2024-12-12 10:00:00','2024-12-13 08:44:03',NULL),
+(36,'Wide Leg Trousers','https://i5.walmartimages.com/asr/a837facf-5a84-4075-b5d2-08ec55247391.a2e62e105c2f4a21704ed04d59b42d6e.jpeg','Comfortable wide-leg trousers for casual wear.',40,220000,10,2,4,'2024-12-12 10:00:00','2024-12-13 08:50:38',NULL),
+(37,'Slim Fit Trousers','https://i5.walmartimages.com/asr/4931432f-9375-48fe-b623-110e808c4d3c_1.40bdcbeb74b4c381e7e662b8d16f1629.jpeg','Slim fit trousers perfect for office wear.',50,210000,5,2,4,'2024-12-12 10:00:00','2024-12-13 08:50:39',NULL),
+(41,'A-Line Skirt','https://i5.walmartimages.com/asr/b661e520-8ef0-4ff7-ba5e-bcf2c9e15cdf.62065d5b5b045da7b74a3c75e5da5d8e.jpeg','Classic A-line skirt perfect for any occasion.',70,130000,0,2,8,'2024-12-12 10:00:00','2024-12-13 08:51:11',NULL),
+(42,'Knee-length Denim Skirt','https://i.pinimg.com/736x/ec/c3/e3/ecc3e33b5cbe09e23abb4ed4413def40.jpg','Denim skirt for casual looks.',30,190000,10,2,8,'2024-12-12 10:00:00','2024-12-13 08:51:12',NULL),
+(46,'Leather Jacket','https://images-na.ssl-images-amazon.com/images/I/713azxKQ1RL.jpg','Stylish leather jacket for casual outings.',20,350000,5,2,5,'2024-12-12 10:00:00','2024-12-13 08:51:32',NULL),
+(47,'Denim Jacket','https://i.pinimg.com/originals/95/2d/0e/952d0e48c452ccc99eab2831ea1814dd.jpg','Classic blue denim jacket.',35,250000,10,2,5,'2024-12-12 10:00:00','2024-12-17 21:40:28',NULL),
+(55,'Floral Dress','https://fasnina.com/wp-content/uploads/2020/01/dress-anak-perempuan.jpg','Pretty floral dress for girls.',60,140000,5,3,7,'2024-12-11 10:00:00','2024-12-13 08:51:55',NULL),
+(56,'Denim Skirt','https://down-id.img.susercontent.com/file/sg-11134201-7rbk0-lkt0o3zw0e6984','Casual denim skirt for girls.',50,130000,10,3,8,'2024-12-11 10:00:00','2024-12-13 08:51:58',NULL),
+(57,'Graphic Tee','https://i5.walmartimages.com/asr/ee6aa4c2-8670-40b0-905c-dd03585fe5d5_1.9fce0bac9228c750a73349f27660750e.jpeg','Colorful graphic T-shirt for girls.',70,100000,0,3,6,'2024-12-11 10:00:00','2024-12-13 08:52:13',NULL),
+(58,'Printed sweatshirt','https://dfcdn.defacto.com.tr/7/Y5095A6_22AU_AR1_01_02.jpg','Comfortbale sweatshirt for girls.',50,100000,0,3,6,'2024-12-11 10:00:00','2024-12-13 08:53:50',NULL),
+(59,'Slim Fit Jeans','https://ecs7.tokopedia.net/img/cache/700/product-1/2018/12/13/4388653/4388653_53828fbd-4ffa-42a9-b6d5-f9a647490aba.jpg','A comfortable jeans for girls.',40,180000,0,3,4,'2024-12-11 10:00:00','2024-12-13 08:52:24',NULL),
+(60,'Hooded Sweatshirt','https://i.pinimg.com/originals/d3/ec/c4/d3ecc4b10e93909221b396f6b73f810e.jpg','Comfortable hooded sweatshirt for boys.',50,170000,10,3,2,'2024-12-11 10:00:00','2024-12-13 08:53:12',NULL),
+(61,'Cargo Shorts','https://down-id.img.susercontent.com/file/id-11134207-7r991-lm32yzrey0mj5c','Durable cargo shorts for boys.',80,120000,5,3,3,'2024-12-11 10:00:00','2024-12-13 08:53:10',NULL),
+(62,'Striped Polo Shirt','https://i.pinimg.com/originals/83/ca/40/83ca4074c86082de1e303e50145bcefc.jpg','Smart striped polo shirt for boys.',60,150000,5,3,2,'2024-12-11 10:00:00','2024-12-17 21:41:30',NULL);
 
 /*Table structure for table `migrations` */
 
@@ -371,14 +371,14 @@ CREATE TABLE `sub_categories` (
 /*Data for the table `sub_categories` */
 
 insert  into `sub_categories`(`id_sub_category`,`name`,`img`,`id_category`,`created_at`,`updated_at`) values 
-(1,'T-Shirts','',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(2,'Shirts','',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(3,'Shorts','men_shorts.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(4,'Trousers','men_trousers.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(5,'Jacket','men_jackets_coats.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(6,'Tops','women_tops.jpg',2,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(7,'Dresses','women_dresses.jpg',2,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
-(8,'Skirts','women_skirts.jpg',2,'2024-12-11 10:00:00','2024-12-11 10:00:00');
+(1,'T-Shirts','https://dynamic.zacdn.com/wrzl4hhcupEAWUtQqC-NGVPJ1_s=/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/kale-clothing-9872-5761543-1.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(2,'Shirts','https://i.pinimg.com/originals/17/89/70/178970b49259f4836e6e70ca09725758.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(3,'Shorts','https://www.tennisnuts.com/images/product/full/887517-686-A.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(4,'Trousers','https://images.opumo.com/wordpress/wp-content/uploads/2023/02/opumo-2-4.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(5,'Jacket','https://i.pinimg.com/originals/0c/f3/a1/0cf3a1583e51d2df856a633d0d2c2e0e.jpg',1,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(6,'Tops','https://down-id.img.susercontent.com/file/id-11134207-7r98z-lxxx749m1zfw46',2,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(7,'Dresses','https://laz-img-sg.alicdn.com/p/488f30f36199a8a286a85f69141aa5a5.jpg',2,'2024-12-11 10:00:00','2024-12-11 10:00:00'),
+(8,'Skirts','https://i.pinimg.com/736x/ec/c3/e3/ecc3e33b5cbe09e23abb4ed4413def40.jpg',2,'2024-12-11 10:00:00','2024-12-11 10:00:00');
 
 /*Table structure for table `users` */
 
