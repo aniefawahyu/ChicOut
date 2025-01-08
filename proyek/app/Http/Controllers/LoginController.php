@@ -45,6 +45,7 @@ class LoginController extends Controller
             if ($user) {
                 // Simpan data user ke session
                 session(['user' => $user]);
+                
 
                 // Cek role user untuk menentukan redirect
                 if ($user->role === 'master') {
@@ -53,12 +54,12 @@ class LoginController extends Controller
                 }
                 return redirect('/dashboard');
             }
-            if (Auth::attempt($credentials)) {
-                if (Auth::user()->role == "master") {
-                    return redirect()->route('master-home');
-                }
-                return redirect()->route('home');
-            } 
+            // if (Auth::attempt($credentials)) {
+            //     if (Auth::user()->role == "master") {
+            //         return redirect()->route('master-home');
+            //     }
+            //     return redirect()->route('home');
+            // } 
             else {
                 return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
             }
