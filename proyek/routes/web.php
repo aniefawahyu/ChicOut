@@ -6,7 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
+Route::get(uri: '/', action: function () {
     return redirect()->route("home");
 });
 
@@ -22,11 +22,11 @@ Route::prefix("ChicOut")->group(function () {
 
         Route::get('/Category', function () {
             // Avoid redirecting back to this route
-            return redirect('ChicOut/Category/Men');    
+            return redirect('ChicOut/Category/Men');
         })->name('category');
 
         // Route::get('/Category/{nama}', "getCategoryPage");
-        
+
         // Route::get('ChicOut/Category/{categoryName}', 'getCategoryPage')
         // ->where('categoryName', '[A-Za-z]+')
         // ->name('category.dynamic');
@@ -37,7 +37,7 @@ Route::prefix("ChicOut")->group(function () {
         Route::get('/Category/{nama}', "getCategoryPage");
 
         Route::get('/Cart', "getCartPage")->middleware("custom:user,master")->name('cart');
-        Route::post('/Cart', "postCartPage");
+        Route::post('/Cart', "postCartPage")->name('cart');
 
         Route::get('/update-cart', function () {
             return redirect()->route('cart');
@@ -48,7 +48,6 @@ Route::prefix("ChicOut")->group(function () {
         Route::post('/Profile', "postProfilePage")->middleware("custom:user,master");
 
         Route::get('/Profile/History/{id}', "getDtrans")->middleware("custom:user,master")->name('dtrans');
-
     });
 
     Route::prefix("Master")->group(function () {
@@ -56,7 +55,7 @@ Route::prefix("ChicOut")->group(function () {
             Route::get('/', "getMasterHome")->name('master-home');
             Route::post('/', "postMasterHome");
 
-            Route::get('/ReportItem', [ExportController::class ,"excelItems"])->name('master-report-item');
+            Route::get('/ReportItem', [ExportController::class, "excelItems"])->name('master-report-item');
 
             Route::get('/Transaction', function () {
                 return redirect()->route('master-home');
@@ -103,4 +102,3 @@ Route::prefix("ChicOut")->group(function () {
         Route::get('/logout', [LoginController::class, "logoutAccount"])->name('logout');
     });
 });
-    
