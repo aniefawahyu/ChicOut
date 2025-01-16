@@ -141,7 +141,6 @@ class TransactionController extends Controller
 
     public function handleTransaction(Request $req)
     {
-        return redirect()->route('cart')->with('sukses', "Purchase successful!");
         if ($req->has("buy")) {
             $listCart = Auth::user()->getCart;
             $stockNotEnough = $this->checkItemStock($listCart);
@@ -164,6 +163,7 @@ class TransactionController extends Controller
 
             return redirect()->route('cart')->with(['snap_token' => $snapToken, 'ID_htrans' => $htrans->ID_htrans]);
         }
+        // return redirect()->route('cart')->with('sukses', "Purchase successful!");
     }
 
     public function handlePaymentValidation(Request $req)
@@ -175,7 +175,7 @@ class TransactionController extends Controller
             $htrans->update(["status" => 'paid']);
             $htrans->save();
             // dd($htrans);
-            return redirect()->route('home')->with('sukses', "Purchase successful!");
+            return redirect()->route('cart')->with('sukses', "Purchase successful!");
         }
     }
 }
