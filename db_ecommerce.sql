@@ -34,12 +34,8 @@ CREATE TABLE `accounts` (
 /*Data for the table `accounts` */
 
 insert  into `accounts`(`username`,`display_name`,`email`,`password`,`tel`,`address`,`role`) values 
-('calvin','calvin','calvin@gmail.com','$2y$10$hr0ZX5d1kZ4OIwUdPgqmG.gctvq0CuI9is8PHM5tkkxim380Bo8C2','0819829839','Klampis','user'),
-('calvins','calvin','calvinsabcdefg@gmail.com','$2y$10$HUkLeKVlW7IJdlBr.2AQHO/5qapqLLMbFp00I4ubarkyeLVEFKXWW','0819829839','Klampis','user'),
-('coba','master','master@gmail.com','$2y$10$x1t7VG881pSyHf9m/kY0t.zT8P3sAaNEY/oXFS47wdo1dE2jn27fi','0987898778971','ngagel','user'),
-('Flo','Florencia','florencia@gmail.com','$2y$10$dgsh2Tp2sz2WMfnl8iYQi.EQ7CytgJgqqzWorYfGv.la7mQ43yA4u','0881037767536','Surabaya','user'),
-('joy','Joy Gemilang','joy@gmail.com','$2y$10$CL0haM2/XA/M.mikXw/l0e86Z9Z/w.EYnCk5NahlNVsWSgS7S9d8e','09191283928','ngagel','master'),
-('ryu','Ryu','ryuganteng123@bolobolo.com','$2y$10$gi/ZXimG7GVtggYLn4pSd.kgAVIaIiT/JBE/go9aWT9SJKpH5GyhO','123','123','user');
+('asd','asd','asd@gmail.com','$2y$10$hr0ZX5d1kZ4OIwUdPgqmG.gctvq0CuI9is8PHM5tkkxim380Bo8C2','0819829839','Klampis','user'),
+('admin','admin','admin@gmail.com','$2y$10$CL0haM2/XA/M.mikXw/l0e86Z9Z/w.EYnCk5NahlNVsWSgS7S9d8e','09191283928','ngagel','master');
 
 /*Table structure for table `cart` */
 

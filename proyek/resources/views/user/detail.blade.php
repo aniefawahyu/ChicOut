@@ -1,26 +1,19 @@
 @extends('layout.general')
 
 @section('title')
-TastyPastries - {{$selectedItem->name}}
+ChicOut - {{$selectedItem->name}}
 @endsection
 
 @section('menu')
 
-<li class="@if ($selectedItem->Category->name == " Food") active @endif">
-    <a href="{{ url('TastyPastries/Category/Food') }}">Food</a>
+<li class="@if ($selectedItem->Category->name == " Men") active @endif">
+    <a href="{{ url('ChicOut/Category/Men') }}">Men</a>
 </li>
-<li class="@if ($selectedItem->Category->name == " Drink") active @endif">
-    <a href="{{ url('TastyPastries/Category/Drink') }}">Drink</a>
+<li class="@if ($selectedItem->Category->name == " Women") active @endif">
+    <a href="{{ url('ChicOut/Category/Women') }}">Women</a>
 </li>
-<li class="has-dropdown @if ($selectedItem->Category->name != " Food" && $selectedItem->Category->name != "Drink") active @endif">
-    <a>More</a>
-    <ul class="dropdown">
-        @foreach ($listMerch as $c)
-        <li>
-            <a href="{{ url('TastyPastries/Category/' . $c['name']) }}">{{ $c['name'] }}</a>
-        </li>
-        @endforeach
-    </ul>
+<li class="@if ($selectedItem->Category->name == " Kids") active @endif">
+    <a href="{{ url('ChicOut/Category/Kids') }}">Kids</a>
 </li>
 @auth
 @if (auth()->user()->role === 'master')

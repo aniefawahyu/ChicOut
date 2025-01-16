@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\Account;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
@@ -19,96 +20,57 @@ class LoginController extends Controller
     public function loginRegister(Request $req)
     {
         if ($req->has("login")) {
-            $rules = [
-                'loginUsername' => 'required',
-                'loginPassword' => 'required',
-            ];
-
-            $messages = [
-                'loginUsername.required' => 'Username is required.',
-                'loginPassword.required' => 'Password is required.',
-            ];
-
-            $req->validate($rules, $messages);
-
-            $credentials = [
-                'username' => $req->loginUsername,
-                'password' => $req->loginPassword
-            ];
-
-            // $user = DB::table('accounts')
-            //     ->where('username', $req->loginUsername)
-            //     // ->where('password', $req->loginPassword)
-            //     ->first();
-
-            // kasir
-            if ($req->loginUsername === 'kasir' && $req->loginPassword === 'kasir') {
-                session(['user' => (object)[
-                    'username' => 'kasir',
-                    'role' => 'master'
-                ]]);
-
-                return redirect()->route('master-home');
-            }
-
-            if (Auth::attempt($credentials)) {
-                $req->session()->regenerate();
-                $user = Auth::user();
-                // dd($user);
-
-                // Cek role user untuk menentukan redirect
-                if ($user->role === 'master') {
-                    return redirect()->route('master-home');
-                }
-                return redirect('/ChicOut');
-            } else {
-                return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
-            }
-
-            // // Jika user ditemukan
-            // if ($user) {
-            //     // Simpan data user ke session
-            //     session(['user' => $user]);
-
-            //     // Cek role user untuk menentukan redirect
-            //     if ($user->role === 'master') {
-            //         // dd($user);
-            //         return redirect()->route('master-home');
-            //     }
-            //     return redirect('/ChicOut');
-            // }
-
-
-            // // if (Auth::attempt($credentials)) {
-            // //     if (Auth::user()->role == "master") {
-            // //         return redirect()->route('master-home');
-            // //     }
-            // //     return redirect()->route('home');
-            // // }
-            // else {
-            //     return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
-            // }
+            return $this->handleLogin($req);
         } else {
-            $rules = [
-                'username' => 'required',
-                'display_name' => 'required',
-                'password' => 'required',
-                'confirmPassword' => 'required|same:password',
-                'email' => 'required|email',
-                'tel' => 'required|numeric',
-                'address' => 'required',
-            ];
-            $newAcc = Account::create([
-                "username" => $req->username,
-                "display_name" => $req->display_name,
-                "password" => $req->password,
-                "email" => $req->email,
-                "tel" => $req->tel,
-                "address" => $req->address,
-                "role" => "user",
-            ]);
-            return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
+            return $this->handleRegister($req);
         }
+    }
+
+    private function handleLogin(Request $req)
+    {
+        $rules = [
+            'loginUsername' => 'required',
+            'loginPassword' => 'required',
+        ];
+
+        $messages = [
+            'loginUsername.required' => 'Username is required.',
+            'loginPassword.required' => 'Password is required.',
+        ];
+
+        $req->validate($rules, $messages);
+
+        $credentials = [
+            'username' => $req->loginUsername,
+            'password' => $req->loginPassword
+        ];
+
+        if (Auth::attempt($credentials)) {
+            $req->session()->regenerate();
+            $user = Auth::user();
+
+            return $user->role === 'master' 
+                ? redirect()->route('master-home')
+                : redirect('/ChicOut');
+        }
+
+        return redirect()
+            ->route('login')
+            ->with("pesan", "Username or Password incorrect.");
+    }
+
+    private function handleRegister(Request $req)
+    {
+        $rules = [
+            'username' => 'required|unique:accounts,username',
+            'display_name' => 'required',
+            'password' => 'required|min:6',
+            'confirmPassword' => 'required|same:password',
+            'email' => 'required|email|unique:accounts,email',
+            'tel' => 'required|numeric',
+            'address' => 'required',
+        ];
+
         $messages = [
             'username.required' => 'Username is required.',
             'username.unique' => 'Username is already in use.',
@@ -125,19 +87,40 @@ class LoginController extends Controller
             'address.required' => 'Address is required.',
         ];
 
-        $validator = Validator::make($req->all(), $rules, $messages)->validate();
+        $validator = Validator::make($req->all(), $rules, $messages);
 
+        if ($validator->fails()) {
+            return redirect()
+                ->route('login')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
+        Account::create([
+            "username" => $req->username,
+            "display_name" => $req->display_name,
+            "password" => Hash::make($req->password),
+            "email" => $req->email,
+            "tel" => $req->tel,
+            "address" => $req->address,
+            "role" => "user",
+        ]);
 
-        // return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
-        // }
+        return redirect()
+            ->route('login')
+            ->with('sukses', 'Successfully registered an account!');
     }
 
     public function logoutAccount()
     {
         if (Auth::check()) {
             Auth::logout();
+            Session::flush();
+            return redirect()
+                ->route("home")
+                ->with('sukses', 'Successfully logged out!');
         }
+        
         return redirect()->route("home");
     }
 }

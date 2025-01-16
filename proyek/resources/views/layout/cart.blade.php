@@ -12,7 +12,7 @@
     <!-- Animate.css -->
     {{-- <link rel="stylesheet" href="{{ asset('coba/css/animate.css') }}"> --}}
     <!-- Icomoon Icon Fonts-->
-    {{-- <link rel="stylesheet" href="{{ asset('coba/css/icomoon.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('coba/css/icomoon.css') }}">
     <!-- Bootstrap  -->
     <link rel="stylesheet" href="{{ asset('coba/css/bootstrap.css') }}">
     <!-- Flexslider  -->

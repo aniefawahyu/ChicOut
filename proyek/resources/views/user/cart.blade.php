@@ -1,26 +1,28 @@
 @extends('layout.cart')
 
 @section('title')
-TastyPastries - Cart
+ChicOut - Cart
 @endsection
 
 @section('menu')
-<li>
-    <a href="{{ url('TastyPastries/Category/Food') }}">Food</a>
-</li>
-<li>
-    <a href="{{ url('TastyPastries/Category/Drink') }}">Drink</a>
-</li>
-<li class="has-dropdown" style="color:rgba(255, 255, 255, 0.7)">
-    <a>More</a>
-    <ul class="dropdown">
-        @foreach ($listMerch as $c)
-        <li>
-            <a href="{{ url('TastyPastries/Category/' . $c['name']) }}">{{ $c['name'] }}</a>
-        </li>
-        @endforeach
-    </ul>
-</li>
+<li class="{{ request()->is('ChicOut/Category/Men') ? 'active' : '' }}">
+        <a href="{{ url('ChicOut/Category/Men') }}" 
+        style="background-image: url('{{ asset('image/Men.jpeg') }}')">
+            Men
+        </a>
+    </li>
+    <li class="{{ request()->is('ChicOut/Category/Women') ? 'active' : '' }}">
+        <a href="{{ url('ChicOut/Category/Women') }}" 
+        style="background-image: url('{{ asset('image/Women.jpeg') }}')">
+            Women
+        </a>
+    </li>
+    <li class="{{ request()->is('ChicOut/Category/Kids') ? 'active' : '' }}">
+        <a href="{{ url('ChicOut/Category/Kids') }}" 
+        style="background-image: url('{{ asset('image/Kids.jpeg') }}')">
+            Kids
+        </a>
+    </li>
 
 @auth
 @if (auth()->user()->role === 'master')
