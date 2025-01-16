@@ -1,4 +1,4 @@
-@extends('layout.general')
+@extends('layout.cart')
 
 @section('title')
 TastyPastries - Cart
@@ -182,6 +182,15 @@ TastyPastries - Cart
     @endif
 
     {{-- popup --}}
+    @if (Session::has('snap_token'))
+    <script>
+        (() => {
+            window.snap.pay(`{{ Session::get('snap_token') }}`);
+
+        })()
+    </script>
+    @endif
+
     @if (Session::has('choose_payment'))
     <div id="paymentPopup" data-animate-effect="fadeIn"
         class="card">
@@ -212,18 +221,19 @@ TastyPastries - Cart
     </div>
     @elseif (Session::has('sukses'))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Yay...',
-            text: '{{ Session::get(key: '
-            sukses ') }}',
-            customClass: {
-                confirmButton: 'btn btn-success',
-                container: 'my-swal'
-            }
-        });
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+        < /> <
+        script >
+            Swal.fire({
+                icon: 'success',
+                title: 'Yay...',
+                text: '{{ Session::get(key: '
+                sukses ') }}',
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    container: 'my-swal'
+                }
+            });
     </script>
     <style>
         .my-swal .swal2-confirm {

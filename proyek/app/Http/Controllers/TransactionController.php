@@ -112,7 +112,7 @@ class TransactionController extends Controller
             $products[] = [
                 "id" => $item->Item->ID_items,
                 "price" => $item->Item->price,
-                "quantity" => $item->Item->qty,
+                "quantity" => $item->qty,
                 "name" => $item->Item->name
             ];
         }
@@ -131,19 +131,6 @@ class TransactionController extends Controller
                 ]
             ],
             "item_details" => $products
-            // [
-            //     "id" => "a01",
-            //     "price" => 7000,
-            //     "quantity" => 1,
-            //     "name" => "Apple"
-            // ],
-            // [
-            //     "id" => "b02",
-            //     "price" => 3000,
-            //     "quantity" => 2,
-            //     "name" => "Orange"
-            // ]
-
         ];
 
         $snapToken = \Midtrans\Snap::getSnapToken($payload);
@@ -173,9 +160,8 @@ class TransactionController extends Controller
                 return redirect()->route('cart')->with('gagal', "Failed to complete the purchase.");
             }
 
-            return redirect()->route('cart')->with('sukses', "Purchase successful!");
+            return redirect()->route('cart')->with('snap_token', $snapToken);
+            // return redirect()->route('cart')->with('sukses', "Purchase successful!");
         }
-
-        return redirect()->route('cart');
     }
 }
