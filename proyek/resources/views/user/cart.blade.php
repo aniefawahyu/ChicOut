@@ -256,12 +256,12 @@ TastyPastries - Cart
 
     @if (Session::has('sukses'))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
         Swal.fire({
             icon: 'success',
             title: 'Yay...',
-            text: '{{ Session::get(key: '
-            sukses ') }}',
+            text: '{{ Session::get(key: "sukses") }}',
             customClass: {
                 confirmButton: 'btn btn-success',
                 container: 'my-swal'
@@ -280,8 +280,7 @@ TastyPastries - Cart
         Swal.fire({
             icon: 'error',
             title: 'Nooo...',
-            text: '{{ Session::get('
-            fail ') }}',
+            text: '{{ Session::get("fail") }}',
             customClass: {
                 confirmButton: 'btn btn-danger',
                 container: 'my-swal'
