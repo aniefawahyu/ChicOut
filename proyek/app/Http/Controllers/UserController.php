@@ -21,12 +21,13 @@ use App\Models\Dtran;
 
 class UserController extends Controller
 {
-    public function getHomePage(){
-        $topItems = Dtran::select('ID_items', \DB::raw('SUM(qty) as total_qty'))
-        ->groupBy('ID_items')
-        ->orderByDesc('total_qty')
-        ->take(8)
-        ->get();
+    public function getHomePage()
+    {
+        $topItems = Dtran::select('ID_items', DB::raw('SUM(qty) as total_qty'))
+            ->groupBy('ID_items')
+            ->orderByDesc('total_qty')
+            ->take(8)
+            ->get();
         $topItemIDs = $topItems->pluck('ID_items')->toArray();
         $bestSeller = Item::whereIn('ID_items', $topItemIDs)->get();
 
@@ -39,7 +40,8 @@ class UserController extends Controller
         return view("user.home", $param);
     }
 
-    public function getCategoryPage(Request $req) {
+    public function getCategoryPage(Request $req)
+    {
         $categoryName = $req->nama;
         // dd($categoryName);
         $category = Category::where('name', $categoryName)->first();
@@ -56,10 +58,11 @@ class UserController extends Controller
             return redirect()->route('category');
         }
     }
-    
 
-    public function getDetailPage(Request $req) {
-        $selectedItem = Item::where('ID_items',$req->id)->withTrashed()->first();
+
+    public function getDetailPage(Request $req)
+    {
+        $selectedItem = Item::where('ID_items', $req->id)->withTrashed()->first();
         if ($selectedItem) {
             $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
             $itemReviews = $selectedItem->getReviews;
@@ -67,10 +70,10 @@ class UserController extends Controller
 
             if (Auth::check()) {
                 $buyed = Dtran::where('ID_items', $req->id)
-                ->whereHas('Htrans', function ($query) {
-                    $query->where('username', Auth::user()->username);
-                })
-                ->exists();
+                    ->whereHas('Htrans', function ($query) {
+                        $query->where('username', Auth::user()->username);
+                    })
+                    ->exists();
                 $param["buyed"] = $buyed;
             }
             $param["averageRate"] = $averageRate ?: 0;
@@ -84,8 +87,9 @@ class UserController extends Controller
         }
     }
 
-    public function postDetailPage(Request $req) {
-        $selectedItem = Item::where('id_items',$req->id)->first();
+    public function postDetailPage(Request $req)
+    {
+        $selectedItem = Item::where('id_items', $req->id)->first();
         if ($req->has("addCart")) {
             $listCart = Auth::user()->getCart;
             if ($listCart->contains('ID_items', $req->id)) {
@@ -105,12 +109,14 @@ class UserController extends Controller
                 }
             } else {
                 if ($selectedItem->stock > 0 && $req->qty <= $selectedItem->stock && $req->qty > 0) {
-                    Cart::create(["username" => Auth::user()->username,
-                                "ID_items" => $req->id,
-                                "qty" => $req->qty]);
+                    Cart::create([
+                        "username" => Auth::user()->username,
+                        "ID_items" => $req->id,
+                        "qty" => $req->qty
+                    ]);
                     return redirect()->route('cart');
                 } else {
-                    return redirect()->route('detail', ['id' => $req->id])->with("pesan", "Qty tidak boleh 0 dan tidak boleh lebih dari". $selectedItem['stock']."!");
+                    return redirect()->route('detail', ['id' => $req->id])->with("pesan", "Qty tidak boleh 0 dan tidak boleh lebih dari" . $selectedItem['stock'] . "!");
                 }
             }
         } else if ($req->has("postComment")) {
@@ -140,7 +146,8 @@ class UserController extends Controller
         }
     }
 
-    public function getCartPage() {
+    public function getCartPage()
+    {
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
@@ -154,10 +161,11 @@ class UserController extends Controller
         return view("user.cart", $param);
     }
 
-    public function postCartPage(Request $req) {
+    public function postCartPage(Request $req)
+    {
         if ($req->has("clear")) {
             Auth::user()->getCart()->delete();
-        } else if ($req->has("delete")){
+        } else if ($req->has("delete")) {
             $cartItem = Cart::find($req->delete);
             if ($cartItem) {
                 $cartItem->delete();
@@ -166,7 +174,7 @@ class UserController extends Controller
             $stockNotEnough = false;
             $listCart = Auth::user()->getCart;
             foreach ($listCart as $item) {
-                if ($item->Item->stock - $item->qty < 0 ) {
+                if ($item->Item->stock - $item->qty < 0) {
                     $stockNotEnough = true;
                     if ($item->Item->stock != 0) {
                         $item->update(["qty" => $item->Item->stock]);
@@ -191,10 +199,12 @@ class UserController extends Controller
                     $total += $subtotal;
                 }
             }
-            $htrans = Htran::create(["username" => Auth::user()->username,
-                        "ID_payments" => $req->pay,
-                        "total" => $total,
-                        "address" => Auth::user()->address]);
+            $htrans = Htran::create([
+                "username" => Auth::user()->username,
+                "ID_payments" => $req->pay,
+                "total" => $total,
+                "address" => Auth::user()->address
+            ]);
             $ID_htrans = $htrans->ID_htrans;
             if ($htrans) {
                 foreach ($listCart as $item) {
@@ -203,14 +213,15 @@ class UserController extends Controller
                         $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
                     } else {
                         $subtotal = $item->Item->price * $item->qty;
-
                     }
-                    Dtran::create(["ID_htrans" => $ID_htrans,
-                                "ID_items" => $item->Item->ID_items,
-                                "qty" => $item->qty,
-                                "price" => $item->Item->price,
-                                "discount" => $item->Item->discount,
-                                "subtotal" => $subtotal]);
+                    Dtran::create([
+                        "ID_htrans" => $ID_htrans,
+                        "ID_items" => $item->Item->ID_items,
+                        "qty" => $item->qty,
+                        "price" => $item->Item->price,
+                        "discount" => $item->Item->discount,
+                        "subtotal" => $subtotal
+                    ]);
                     $product = Item::where('ID_items', $item->Item->ID_items)->first();
                     $product->update(["stock" => $product->stock - $item->qty]);
                 }
@@ -224,7 +235,8 @@ class UserController extends Controller
         return redirect()->route('cart');
     }
 
-    public function updateCart(Request $request){
+    public function updateCart(Request $request)
+    {
         $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
         // Validate the request
         $request->validate([
@@ -247,7 +259,8 @@ class UserController extends Controller
         return response()->json(['view' => $view]);
     }
 
-    public function getProfilePage() {
+    public function getProfilePage()
+    {
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
@@ -258,7 +271,8 @@ class UserController extends Controller
         return view("user.profile", $param);
     }
 
-    public function postProfilePage(Request $req) {
+    public function postProfilePage(Request $req)
+    {
         $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
         $param["listMerch"] = $listMerch;
         $param["myReviews"] = Auth::user()->myReviews;
@@ -327,20 +341,22 @@ class UserController extends Controller
         }
     }
 
-    public function getDtrans(Request $req) {
+    public function getDtrans(Request $req)
+    {
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
         $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
         $param["listMerch"] = $listMerch;
 
-        $htrans = Htran::with(['Payment' => function ($query) {$query->withTrashed();}])->find($req->id);
+        $htrans = Htran::with(['Payment' => function ($query) {
+            $query->withTrashed();
+        }])->find($req->id);
         if ($htrans) {
             $param["listDtrans"] = $htrans->getDtrans;
             $param["htrans"] = $htrans;
             return view("user.history", $param);
-        }
-        else {
+        } else {
             return redirect()->route('profile');
         }
     }

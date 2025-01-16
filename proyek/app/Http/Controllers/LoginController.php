@@ -11,11 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
-    public function getLoginPage() {
+    public function getLoginPage()
+    {
         return view('login-register');
     }
 
-    public function loginRegister(Request $req) {
+    public function loginRegister(Request $req)
+    {
         if ($req->has("login")) {
             $rules = [
                 'loginUsername' => 'required',
@@ -34,46 +36,58 @@ class LoginController extends Controller
                 'password' => $req->loginPassword
             ];
 
-            $user = DB::table('accounts')
-            ->where('username', $req->loginUsername)
-            ->where('password', $req->loginPassword)
-            ->first();
+            // $user = DB::table('accounts')
+            //     ->where('username', $req->loginUsername)
+            //     // ->where('password', $req->loginPassword)
+            //     ->first();
 
-            // dd($user);
             // kasir
-            // if ($req->loginUsername === 'kasir' && $req->loginPassword === 'kasir') {
-                
-            //     session(['user' => (object)[
-            //         'username' => 'kasir',
-            //         'role' => 'master'
-            //     ]]);
-    
-               
-            //     return redirect()->route('master-home');
-            // }
-    
-            // Jika user ditemukan
-            if ($user) {
-                // Simpan data user ke session
-                session(['user' => $user]);
-                
+            if ($req->loginUsername === 'kasir' && $req->loginPassword === 'kasir') {
+                session(['user' => (object)[
+                    'username' => 'kasir',
+                    'role' => 'master'
+                ]]);
+
+                return redirect()->route('master-home');
+            }
+
+            if (Auth::attempt($credentials)) {
+                $req->session()->regenerate();
+                $user = Auth::user();
+                // dd($user);
 
                 // Cek role user untuk menentukan redirect
                 if ($user->role === 'master') {
-                    // dd($user);
                     return redirect()->route('master-home');
                 }
-                return redirect('/dashboard');
-            }
-            if (Auth::attempt($credentials)) {
-                if (Auth::user()->role == "master") {
-                    return redirect()->route('master-home');
-                }
-                return redirect()->route('home');
-            } 
-            else {
+                return redirect('/ChicOut');
+            } else {
                 return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
             }
+
+            // // Jika user ditemukan
+            // if ($user) {
+            //     // Simpan data user ke session
+            //     session(['user' => $user]);
+
+            //     // Cek role user untuk menentukan redirect
+            //     if ($user->role === 'master') {
+            //         // dd($user);
+            //         return redirect()->route('master-home');
+            //     }
+            //     return redirect('/ChicOut');
+            // }
+
+
+            // // if (Auth::attempt($credentials)) {
+            // //     if (Auth::user()->role == "master") {
+            // //         return redirect()->route('master-home');
+            // //     }
+            // //     return redirect()->route('home');
+            // // }
+            // else {
+            //     return redirect()->route('login')->with("pesan", "Username or Password incorrect.");
+            // }
         } else {
             $rules = [
                 'username' => 'required',
@@ -95,32 +109,32 @@ class LoginController extends Controller
             ]);
             return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
         }
-            $messages = [
-                'username.required' => 'Username is required.',
-                'username.unique' => 'Username is already in use.',
-                'display_name.required' => 'Display name is required.',
-                'password.required' => 'Password is required.',
-                'password.min' => 'Password must be at least 6 characters.',
-                'confirmPassword.required' => 'Confirm Password is required.',
-                'confirmPassword.same' => 'Confirm Password must match the password.',
-                'email.required' => 'Email is required.',
-                'email.email' => 'Invalid email format.',
-                'email.unique' => 'Email is already registered.',
-                'tel.required' => 'Phone number is required.',
-                'tel.numeric' => 'Phone number must be numeric.',
-                'address.required' => 'Address is required.',
-            ];
+        $messages = [
+            'username.required' => 'Username is required.',
+            'username.unique' => 'Username is already in use.',
+            'display_name.required' => 'Display name is required.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 6 characters.',
+            'confirmPassword.required' => 'Confirm Password is required.',
+            'confirmPassword.same' => 'Confirm Password must match the password.',
+            'email.required' => 'Email is required.',
+            'email.email' => 'Invalid email format.',
+            'email.unique' => 'Email is already registered.',
+            'tel.required' => 'Phone number is required.',
+            'tel.numeric' => 'Phone number must be numeric.',
+            'address.required' => 'Address is required.',
+        ];
 
-            $validator = Validator::make($req->all(), $rules, $messages)->validate();
+        $validator = Validator::make($req->all(), $rules, $messages)->validate();
 
-           
 
-            return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
+        // return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
         // }
     }
 
-    public function logoutAccount(){
-        if (Auth::check()){
+    public function logoutAccount()
+    {
+        if (Auth::check()) {
             Auth::logout();
         }
         return redirect()->route("home");
