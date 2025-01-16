@@ -128,6 +128,7 @@ class LoginController extends Controller
         $validator = Validator::make($req->all(), $rules, $messages)->validate();
 
 
+
         // return redirect()->route('login')->with('sukses', 'Successfully registered an account!');
         // }
     }
