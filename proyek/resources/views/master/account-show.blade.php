@@ -1,6 +1,6 @@
 @extends('layout.crud')
 @section('title')
-    TastyPastries - Accounts
+    Accounts
 @endsection
 
 @section('menu')

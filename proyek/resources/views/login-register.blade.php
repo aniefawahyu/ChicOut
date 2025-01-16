@@ -17,7 +17,6 @@
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
-                    // Menambahkan script JavaScript untuk memunculkan SweetAlert
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -29,7 +28,7 @@
                     });
                 </script>
                 <style>
-                    /* Menambahkan style untuk mengatur margin tombol OK */
+                    
                     .my-swal .swal2-confirm {
                         margin: 1em;
                     }
@@ -40,7 +39,7 @@
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
-                    // Menambahkan script JavaScript untuk memunculkan SweetAlert
+                    
                     Swal.fire({
                         icon: 'success',
                         title: 'Yay...',
@@ -52,7 +51,7 @@
                     });
                 </script>
                 <style>
-                    /* Menambahkan style untuk mengatur margin tombol OK */
+                    
                     .my-swal .swal2-confirm {
                         margin: 1em;
                     }
@@ -63,7 +62,7 @@
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>
-                    // Menambahkan script JavaScript untuk memunculkan SweetAlert
+                    
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
@@ -75,7 +74,7 @@
                     });
                 </script>
                 <style>
-                    /*style untuk mengatur margin tombol OK */
+                    
                     .my-swal .swal2-confirm {
                         margin: 1.25em;
                     }
