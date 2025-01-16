@@ -53,6 +53,7 @@ Route::prefix("ChicOut")->group(function () {
 
     Route::controller(TransactionController::class)->group(function () {
         Route::post('/checkout', 'handleTransaction')->name('checkout');
+        Route::post('/validate-payment', 'handlePaymentValidation')->name('validate-payment');
     });
 
     Route::prefix("Master")->group(function () {

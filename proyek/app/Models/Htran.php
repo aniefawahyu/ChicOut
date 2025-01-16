@@ -19,17 +19,21 @@ class Htran extends Model
         "ID_payments",
         "total",
         "address",
+        "status"
     ];
 
-    public function Account() {
+    public function Account()
+    {
         return $this->belongsTo(Account::class, "username", "username");
     }
 
-    public function getDtrans() {
+    public function getDtrans()
+    {
         return $this->hasMany(Dtran::class, "ID_htrans", "ID_htrans");
     }
 
-    public function Payment() {
+    public function Payment()
+    {
         return $this->belongsTo(Payment::class, "ID_payments", "ID_payments")->withTrashed();
     }
 
@@ -41,5 +45,4 @@ class Htran extends Model
             ->selectRaw('DATE(purchase_date) as purchase_date, SUM(total) as total_per_day')
             ->get();
     }
-
 }

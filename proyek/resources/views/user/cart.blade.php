@@ -185,7 +185,40 @@ TastyPastries - Cart
     @if (Session::has('snap_token'))
     <script>
         (() => {
-            window.snap.pay(`{{ Session::get('snap_token') }}`);
+            window.snap.pay(`{{ Session::get('snap_token') }}`, {
+                onSuccess: async function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment success!");
+                    console.log(result);
+                    alert(result);
+
+                    const formElement = document.createElement("form");
+                    formElement.action = "{{ route('validate-payment') }}";
+                    formElement.method = "POST";
+                    formElement.style.display = "none";
+                    formElement.innerHTML = `
+                        // <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        @csrf
+                        <input type="hidden" name="snap_response" value='${JSON.stringify(result)}'>
+                    `;
+                    document.body.appendChild(formElement);
+                    formElement.submit();
+                },
+                onPending: function(result) {
+                    /* You may add your own implementation here */
+                    alert("wating your payment!");
+                    console.log(result);
+                },
+                onError: function(result) {
+                    /* You may add your own implementation here */
+                    alert("payment failed!");
+                    console.log(result);
+                },
+                onClose: function() {
+                    /* You may add your own implementation here */
+                    alert('you closed the popup without finishing the payment');
+                }
+            });
 
         })()
     </script>
@@ -219,21 +252,21 @@ TastyPastries - Cart
             </div>
         </form>
     </div>
-    @elseif (Session::has('sukses'))
+    @endif
+
+    @if (Session::has('sukses'))
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-        < /> <
-        script >
-            Swal.fire({
-                icon: 'success',
-                title: 'Yay...',
-                text: '{{ Session::get(key: '
-                sukses ') }}',
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    container: 'my-swal'
-                }
-            });
+        Swal.fire({
+            icon: 'success',
+            title: 'Yay...',
+            text: '{{ Session::get(key: '
+            sukses ') }}',
+            customClass: {
+                confirmButton: 'btn btn-success',
+                container: 'my-swal'
+            }
+        });
     </script>
     <style>
         .my-swal .swal2-confirm {

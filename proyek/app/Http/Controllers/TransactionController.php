@@ -49,7 +49,8 @@ class TransactionController extends Controller
             "username" => Auth::user()->username,
             "ID_payments" => $payment,
             "total" => $total,
-            "address" => Auth::user()->address
+            "address" => Auth::user()->address,
+            "status" => 'unpaid'
         ]);
 
         $ID_htrans = $htrans->ID_htrans;
@@ -140,6 +141,7 @@ class TransactionController extends Controller
 
     public function handleTransaction(Request $req)
     {
+        return redirect()->route('cart')->with('sukses', "Purchase successful!");
         if ($req->has("buy")) {
             $listCart = Auth::user()->getCart;
             $stockNotEnough = $this->checkItemStock($listCart);
@@ -160,8 +162,20 @@ class TransactionController extends Controller
                 return redirect()->route('cart')->with('gagal', "Failed to complete the purchase.");
             }
 
-            return redirect()->route('cart')->with('snap_token', $snapToken);
-            // return redirect()->route('cart')->with('sukses', "Purchase successful!");
+            return redirect()->route('cart')->with(['snap_token' => $snapToken, 'ID_htrans' => $htrans->ID_htrans]);
+        }
+    }
+
+    public function handlePaymentValidation(Request $req)
+    {
+        $snapResponse = json_decode($req->snap_response);
+        $ID_htrans = $snapResponse->order_id;
+        $htrans = Htran::where('ID_htrans', $ID_htrans)->first();
+        if ($htrans) {
+            $htrans->update(["status" => 'paid']);
+            $htrans->save();
+            // dd($htrans);
+            return redirect()->route('home')->with('sukses', "Purchase successful!");
         }
     }
 }
