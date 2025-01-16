@@ -1,6 +1,6 @@
 @extends('layout.crud')
 @section('title')
-    TastyPastries - Items
+    ChicOut - Items
 @endsection
 @section('menu')
     <li>
@@ -152,4 +152,77 @@
             @endforeach
         </table>
     </div>
-@endsection
+    <div class="pagination-container">
+        {{ $listItem->appends(request()->query())->links() }}
+    </div>
+    <style>
+        .pagination-container {
+            width: 100%;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .pagination {
+            /* display: flex; */
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 5px;
+            justify-content: space-between;
+        }
+
+        .page-item .page-link {
+            background-color: #1a1814;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            min-width: 40px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
+        }
+
+        .page-item.active .page-link {
+            background-color: #ffffff;
+            color: #1a1814;
+            border-color: #ffffff;
+        }
+
+        .page-item.disabled .page-link {
+            background-color: #1a1814;
+            color: #6c757d;
+            border-color: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .page-link:hover:not(.disabled) {
+            background-color: #ffffff;
+            color: #1a1814;
+            border-color: #ffffff;
+        }
+
+        .page-item:first-child .page-link,
+        .page-item:last-child .page-link {
+            padding: 8px 12px;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .page-link {
+                padding: 6px 12px;
+                min-width: 35px;
+                height: 35px;
+            }
+            
+            .pagination {
+                gap: 3px;
+            }
+        }
+    </style> 
+    @endsection

@@ -1,6 +1,6 @@
 @extends('layout.crud')
 @section('title')
-    TastyPastries - Categories
+    ChicOut - Categories
 @endsection
 
 @section('menu')

@@ -105,13 +105,15 @@ class MasterController extends Controller
     }
 
     public function getItems(Request $req) {
-        $category = Category::where('name', $req->name)->first();
         if ($req->name == "All") {
-            $listItem = Item::withTrashed()->get();
-        } else if ($category != null) {
-            $listItem = $category->getItems()->withTrashed()->get();
+            $listItem = Item::withTrashed()->paginate(10);
         } else {
-            return redirect()->route('master-item', ['name' => 'All']);
+            $category = Category::where('name', $req->name)->first();
+            if ($category != null) {
+                $listItem = $category->getItems()->withTrashed()->paginate(10); 
+            } else {
+                return redirect()->route('master-item', ['name' => 'All']);
+            }
         }
         $param["listItem"] = $listItem;
         $param["listCategory"] = Category::all();

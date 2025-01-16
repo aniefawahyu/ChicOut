@@ -1,25 +1,19 @@
 @extends('layout.general')
 @section('title')
-    TastyPastries - {{ Auth::user()->display_name }}
+    ChicOut - {{ Auth::user()->display_name }}
 @endsection
 
 @section('menu')
     <li>
-        <a href="{{ url('TastyPastries/Category/Food') }}">Food</a>
+        <a href="{{ url('ChicOut/Category/Men') }}">Men</a>
     </li>
     <li>
-        <a href="{{ url('TastyPastries/Category/Drink') }}">Drink</a>
+        <a href="{{ url('ChicOut/Category/Women') }}">Women</a>
     </li>
-    <li class="has-dropdown" style="color:rgba(255, 255, 255, 0.7)">
-        <a>More</a>
-        <ul class="dropdown">
-            @foreach ($listMerch as $c)
-                <li>
-                    <a href="{{ url('TastyPastries/Category/' . $c['name']) }}">{{ $c['name'] }}</a>
-                </li>
-            @endforeach
-        </ul>
+    <li>
+        <a href="{{ url('ChicOut/Category/Kids') }}">Kids</a>
     </li>
+    
 
     @auth
         @if (auth()->user()->role === 'master')

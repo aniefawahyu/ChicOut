@@ -165,7 +165,7 @@ class UserController extends Controller
     {
         // dd(Auth::user());
         if ($req->has("clear")) {
-            Auth::user()->getCart()->delete();
+            Auth::user()->getCartPage->delete();
         } else if ($req->has("delete")) {
             $cartItem = Cart::find($req->delete);
             if ($cartItem) {
@@ -205,8 +205,8 @@ class UserController extends Controller
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
-        $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
-        $param["listMerch"] = $listMerch;
+        // $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+        // $param["listMerch"] = $listMerch;
         $param["myReviews"] = Auth::user()->myReviews;
         $param["listHtrans"] = Auth::user()->getHtrans;
         return view("user.profile", $param);

@@ -1,6 +1,6 @@
 @extends("layout.crud")
 @section('title')
-TastyPastries - Master
+ChicOut - Master
 @endsection
 @section('menu')
 <li class="active">

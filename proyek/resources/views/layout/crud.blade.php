@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 text-center logo-wrap">
-                    <div id="fh5co-logo"><a href="{{ route('home') }}">TastyPastries<span>.</span></a></div>
+                    <div id="fh5co-logo"><a href="{{ route('home') }}">ChicOut<span>.</span></a></div>
                 </div>
                 <div class="col-xs-12 text-center menu-1 menu-wrap">
                     <ul>
@@ -54,8 +54,7 @@
             <div class="row copyright">
                 <div class="col-md-12 text-center">
                     <p>
-                        <small class="block">&copy; 2023. All Rights Reserved.</small>
-                        <small class="block">Designed by Andreas Teams</small>
+                        <small class="block">&copy; 2024. All Rights Reserved.</small>
                     </p>
                     <p>
                     <ul class="fh5co-social-icons">
