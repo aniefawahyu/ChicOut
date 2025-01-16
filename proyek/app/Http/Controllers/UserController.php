@@ -161,8 +161,81 @@ class UserController extends Controller
         return view("user.cart", $param);
     }
 
+    private function checkItemStock($listCart)
+    {
+        $stockNotEnough = false;
+
+        foreach ($listCart as $item) {
+            if ($item->Item->stock - $item->qty < 0) {
+                $stockNotEnough = true;
+                if ($item->Item->stock != 0) {
+                    $item->update(["qty" => $item->Item->stock]);
+                } else {
+                    $item->delete();
+                }
+            }
+        }
+
+        return $stockNotEnough;
+    }
+
+    private function calculateTotalPrice($listCart)
+    {
+        $total = 0;
+        foreach ($listCart as $item) {
+            if ($item->Item->discount != 0) {
+                $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
+                $total += $subtotal;
+            } else {
+                $subtotal = $item->Item->price * $item->qty;
+                $total += $subtotal;
+            }
+        }
+        return $total;
+    }
+
+    private function createHtrans($listCart, $total, $payment = 1)
+    {
+        $htrans = Htran::create([
+            "username" => Auth::user()->username,
+            "ID_payments" => $payment,
+            "total" => $total,
+            "address" => Auth::user()->address
+        ]);
+
+        $ID_htrans = $htrans->ID_htrans;
+
+        foreach ($listCart as $item) {
+            $subtotal = 0;
+            if ($item->Item->discount != 0) {
+                $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
+            } else {
+                $subtotal = $item->Item->price * $item->qty;
+            }
+            Dtran::create([
+                "ID_htrans" => $ID_htrans,
+                "ID_items" => $item->Item->ID_items,
+                "qty" => $item->qty,
+                "price" => $item->Item->price,
+                "discount" => $item->Item->discount,
+                "subtotal" => $subtotal
+            ]);
+            $product = Item::where('ID_items', $item->Item->ID_items)->first();
+            $product->update(["stock" => $product->stock - $item->qty]);
+        }
+
+        Auth::user()->getCart()->delete();
+
+        if ($htrans) {
+            //TODO: do something
+        }
+
+        return $htrans;
+    }
+
     public function postCartPage(Request $req)
     {
+        // dd(Auth::user());
         if ($req->has("clear")) {
             Auth::user()->getCart()->delete();
         } else if ($req->has("delete")) {
@@ -171,65 +244,24 @@ class UserController extends Controller
                 $cartItem->delete();
             }
         } else if ($req->has("buy")) {
-            $stockNotEnough = false;
             $listCart = Auth::user()->getCart;
-            foreach ($listCart as $item) {
-                if ($item->Item->stock - $item->qty < 0) {
-                    $stockNotEnough = true;
-                    if ($item->Item->stock != 0) {
-                        $item->update(["qty" => $item->Item->stock]);
-                    } else {
-                        $item->delete();
-                    }
-                }
-            }
+            $stockNotEnough = $this->checkItemStock($listCart);
+
             if ($stockNotEnough || count($listCart) <= 0) {
                 return redirect()->route('cart')->with('fail', "Some items in your cart are out of stock or not in available.");
             }
-            return redirect()->route('cart')->with('choose_payment', "");
-        } else if ($req->has("pay")) {
-            $listCart = Auth::user()->getCart;
-            $total = 0;
-            foreach ($listCart as $item) {
-                if ($item->Item->discount != 0) {
-                    $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
-                    $total += $subtotal;
-                } else {
-                    $subtotal = $item->Item->price * $item->qty;
-                    $total += $subtotal;
-                }
-            }
-            $htrans = Htran::create([
-                "username" => Auth::user()->username,
-                "ID_payments" => $req->pay,
-                "total" => $total,
-                "address" => Auth::user()->address
-            ]);
-            $ID_htrans = $htrans->ID_htrans;
-            if ($htrans) {
-                foreach ($listCart as $item) {
-                    $subtotal = 0;
-                    if ($item->Item->discount != 0) {
-                        $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
-                    } else {
-                        $subtotal = $item->Item->price * $item->qty;
-                    }
-                    Dtran::create([
-                        "ID_htrans" => $ID_htrans,
-                        "ID_items" => $item->Item->ID_items,
-                        "qty" => $item->qty,
-                        "price" => $item->Item->price,
-                        "discount" => $item->Item->discount,
-                        "subtotal" => $subtotal
-                    ]);
-                    $product = Item::where('ID_items', $item->Item->ID_items)->first();
-                    $product->update(["stock" => $product->stock - $item->qty]);
-                }
-                Auth::user()->getCart()->delete();
-                return redirect()->route('cart')->with('sukses', "Purchase successful!");
-            } else {
+
+            // return redirect()->route('cart')->with('choose_payment', "");
+
+            $total = $this->calculateTotalPrice($listCart);
+
+            $htrans = $this->createHtrans($listCart, $total);
+
+            if (!$htrans) {
                 return redirect()->route('cart')->with('gagal', "Failed to complete the purchase.");
             }
+
+            return redirect()->route('cart')->with('sukses', "Purchase successful!");
         }
 
         return redirect()->route('cart');
