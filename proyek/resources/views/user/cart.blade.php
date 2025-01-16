@@ -52,7 +52,7 @@ TastyPastries - Cart
         </button>
     </form>
     <br>
-    <form method="post">
+    <form action={{ route('checkout') }} method="post">
         @csrf
         <div class="container" id="cartListAjax">
             @php

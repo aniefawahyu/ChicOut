@@ -4,6 +4,7 @@ use App\Http\Controllers\ExportController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 
 Route::get(uri: '/', action: function () {
@@ -48,6 +49,10 @@ Route::prefix("ChicOut")->group(function () {
         Route::post('/Profile', "postProfilePage")->middleware("custom:user,master");
 
         Route::get('/Profile/History/{id}', "getDtrans")->middleware("custom:user,master")->name('dtrans');
+    });
+
+    Route::controller(TransactionController::class)->group(function () {
+        Route::post('/checkout', 'handleTransaction')->name('checkout');
     });
 
     Route::prefix("Master")->group(function () {
