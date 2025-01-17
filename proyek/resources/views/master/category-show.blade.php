@@ -89,9 +89,9 @@
                                 <a class="btn btn-primary"
                                     href="{{ route('master-category-cru', ['id' => $i->ID_categories]) }}" title="Update {{$i->name}}"><i
                                     class="icon-pencil"></i></a>
-                                <a class="btn btn-danger"
+                                {{-- <a class="btn btn-danger"
                                     href="{{ route('master-delete-category', ['id' => $i->ID_categories]) }}" title="Delete {{$i->name}}"><i
-                                    class="icon-trash2"></i></a>
+                                    class="icon-trash2"></i></a> --}}
                             @else
                                 <div>
                                     <a style="margin: auto 0" class="btn btn-primary"

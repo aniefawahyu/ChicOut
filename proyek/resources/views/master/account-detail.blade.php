@@ -1,6 +1,6 @@
 @extends('layout.crud')
 @section('title')
- Accounts
+    TastyPastries - Accounts
 @endsection
 
 @section('menu')
@@ -60,63 +60,46 @@
             }
         </style>
     @endif
-    <div class="box" style="margin-top: 15%; margin-bottom: 2%;">
-        <div class="row">
-            <div class="col-md-10">
-                <h3 class="custom-card-title">Account Information</h3>
-                <p class="custom-card-title">
-                    Username : {{ $acc->username }}
-                </p>
-                <p class="custom-card-title">
-                    Display Name : {{ $acc->display_name }}
-                </p>
-                <p class="custom-card-title">
-                    Email : {{ $acc->email }}
-                </p>
-                <p class="custom-card-title">
-                    Tel : {{ $acc->tel }}
-                </p>
-                <p class="custom-card-title">
-                    Address : {{ $acc->address }}
-                </p>
-            </div>
-            <div class="col-md-2" style="text-align: end">
-                <a href="{{ route('master-account', ['search' => 'All'])}}" class="btn btn-primary"><i class="icon-back"></i></a>
-            </div>
-        </div>
+    <div class="" id="itemList" style="margin-top: 15%">
+        <table class="table" style="background-color: #1a1814">
+            <tr style="font-weight: bold; color: white; border-bottom: 2px solid">
+                <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">Username</th>
+                <th style="border-right: 2px solid; text-align: center">Display Name</th>
+                <th style="border-right: 2px solid; text-align: center">Email</th>
+                <th style="border-right: 2px solid; text-align: center">Tel.</th>
+                <th style="border-right: 2px solid; text-align: center">Action</th>
+            </tr>
+            @foreach ($listAccount as $i)
+                <tr class="text-center" style="color: white; border-bottom: 2px solid">
+                    <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
+                        {{ $i->username }}
+                    </td>
+                    <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
+                        {{ $i->display_name }}
+                    </td>
+                    <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
+                        {{ $i->email }}
+                    </td>
+                    <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
+                        {{ $i->tel }}
+                    </td>
+                    <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
+                        @if ($i->role == "master")
+                        <a class="btn btn-warning" href="{{ route('master-account-role', ['username' => $i->username]) }}">
+                            Change to User
+                        </a>
+                        @else
+                            <a title="View Detail" class="btn btn-primary" href="{{ route('master-account', ['search' => $i->username]) }}">
+                                <i class="icon-eye"></i>
+                            </a>
+                            <a class="btn btn-success" href="{{ route('master-account-role', ['username' => $i->username]) }}">
+                                Change to Master
+                            </a>
+                        @endif
+                    </td>
+                </tr>
+            @endforeach
+        </table>
     </div>
-    <h1 style="color: white">Transaction History</h1>
-    <table class="table" style="background-color: #1a1814">
-        <tr style="font-weight: bold; color: white;">
-            <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">Purchase Date</th>
-            <th style="border-right: 2px solid; text-align: center">Total</th>
-            <th style="border-right: 2px solid; text-align: center">Payment</th>
-            <th style="border-right: 2px solid; text-align: center">Sent To</th>
-        </tr>
-        @foreach ($htrans as $h)
-        <tr class="text-center" style="color: white; border-bottom: 2px solid">
-            <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
-                <a href="{{ route('master-dtrans', ['id'=>$h->ID_htrans]) }}" style="color: white">
-                    {{ \Carbon\Carbon::parse($h->purchase_date)->format('d F Y - H:i') }}
-                </a>
-            </td>
-            <td style="border-right: 2px solid; vertical-align: middle">
-                <a href="{{ route('master-dtrans', ['id'=>$h->ID_htrans]) }}" style="color: white">
-                    Rp {{ number_format($h->total, 0, ',', '.') }}
-                </a>
-            </td>
-            <td style="border-right: 2px solid; vertical-align: middle">
-                <a href="{{ route('master-dtrans', ['id'=>$h->ID_htrans]) }}" style="color: white">
-                    {{$h->Payment->name}}
-                </a>
-            </td>
-            <td style="border-right: 2px solid; vertical-align: middle">
-                <a href="{{ route('master-dtrans', ['id'=>$h->ID_htrans]) }}" style="color: white">
-                    {{ implode(' ', array_slice(explode(' ', $h->address), 0, 5)) }}...
-                </a>
-            </td>
-        </tr>
-        @endforeach
-    </table>
 @endsection
 

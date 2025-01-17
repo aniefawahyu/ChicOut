@@ -26,19 +26,13 @@ Route::prefix("ChicOut")->group(function () {
             return redirect('ChicOut/Category/Men');
         })->name('category');
 
-        // Route::get('/Category/{nama}', "getCategoryPage");
-
-        // Route::get('ChicOut/Category/{categoryName}', 'getCategoryPage')
-        // ->where('categoryName', '[A-Za-z]+')
-        // ->name('category.dynamic');
-
         Route::get('/Item/{id}', "getDetailPage")->name('detail');
         Route::post('/Item/{id}', "postDetailPage")->middleware("custom:user,master");
 
         Route::get('/Category/{nama}', "getCategoryPage");
 
         Route::get('/Cart', "getCartPage")->middleware("custom:user,master")->name('cart');
-        Route::post('/Cart', "postCartPage")->name('cart');
+        Route::post('/Cart', "postCartPage");
 
         Route::get('/update-cart', function () {
             return redirect()->route('cart');
@@ -101,6 +95,7 @@ Route::prefix("ChicOut")->group(function () {
 
             Route::get('/Profile', "getProfile")->name('master-profile');
             Route::post('/Profile', "postProfile");
+
         });
     });
 
