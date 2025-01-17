@@ -38,7 +38,7 @@
         <a href="{{ route('master-profile') }}">Profile</a>
     </li>
     <li>
-        <a href="{{ route('master-profil') }}">LogOut</a>
+        <a href="{{ route('master-profile') }}">LogOut</a>
     </li>
 @endsection
 

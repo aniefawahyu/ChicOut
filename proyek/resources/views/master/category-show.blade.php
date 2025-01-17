@@ -66,7 +66,7 @@
         </div> <br>
         <table class="table" style="background-color: #1a1814">
             <tr style="font-weight: bold; color: white; border-bottom: 2px solid">
-                <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">ID</th>
+                <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">No</th>
                 <th style="border-right: 2px solid; text-align: center">Name</th>
                 <th style="border-right: 2px solid; text-align: center">Image</th>
                 <th style="border-right: 2px solid; text-align: center">Action</th>

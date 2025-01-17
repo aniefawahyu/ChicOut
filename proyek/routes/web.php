@@ -95,7 +95,14 @@ Route::prefix("ChicOut")->group(function () {
 
             Route::get('/Profile', "getProfile")->name('master-profile');
             Route::post('/Profile', "postProfile");
-
+            
+            Route::get('/Brand', function () {
+                return redirect()->route('master-brand');
+            });
+            Route::get('/Brand/All', "getBrand")->name('master-brand');
+            Route::get('/Brand/{id}', "getBrandCRU")->name('master-brand-cru');
+            Route::post('/Brand/{id}', "postBrandCRU");
+            Route::get('/Brand/Delete-Recover/{id}', "deleteBrand")->name('master-delete-brand');
         });
     });
 
