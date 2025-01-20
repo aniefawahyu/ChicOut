@@ -76,6 +76,23 @@ insert  into `categories`(`ID_categories`,`name`,`img`,`created_at`,`updated_at`
 (2,'Women','https://www.womanwithin.com/on/demandware.static/-/Sites-masterCatalog_ellos/default/dwe356877a/images/hi-res/2532_24826_mc_1364.jpg','2024-12-11 10:00:00','2024-12-12 22:12:33',NULL),
 (3,'Kids','https://fasnina.com/wp-content/uploads/2020/01/dress-anak-perempuan.jpg','2024-12-11 10:00:00','2024-12-12 22:12:48',NULL);
 
+CREATE TABLE brands (
+  ID_brands int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL,
+  logo text DEFAULT NULL,
+  created_at datetime DEFAULT current_timestamp(),
+  updated_at datetime DEFAULT NULL ON UPDATE current_timestamp(),
+  deleted_at datetime DEFAULT NULL,
+  PRIMARY KEY (ID_brands)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/* Data untuk tabel brands */
+
+INSERT INTO brands (ID_brands, name, logo, created_at, updated_at, deleted_at) VALUES
+(1, 'H&M', 'https://cleanclothes.org/image-repository/livingwage-living-wage-images-h-m-logo/@@images/image.jpeg', '2024-12-11 10:00:00', '2024-12-12 22:12:21', NULL),
+(2, 'Zara', 'https://logos-world.net/wp-content/uploads/2020/05/Zara-Logo-700x394.png', '2024-12-11 10:00:00', '2024-12-12 22:12:33', NULL),
+(3, 'Uniqlo', 'https://logos-world.net/wp-content/uploads/2023/01/Uniqlo-Logo-500x281.png', '2024-12-11 10:00:00', '2024-12-12 22:12:48', NULL);
+
 /*Table structure for table `dtrans` */
  
 DROP TABLE IF EXISTS `dtrans`;

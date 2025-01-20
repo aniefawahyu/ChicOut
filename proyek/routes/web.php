@@ -29,6 +29,8 @@ Route::prefix("ChicOut")->group(function () {
         Route::get('/Item/{id}', "getDetailPage")->name('detail');
         Route::post('/Item/{id}', "postDetailPage")->middleware("custom:user,master");
 
+        Route::get('/Item/collaboration/{categoryId}/{id}', "getCollaborationDetailPage")->name('collaboration-detail');
+
         Route::get('/Category/{nama}', "getCategoryPage");
 
         Route::get('/Cart', "getCartPage")->middleware("custom:user,master")->name('cart');

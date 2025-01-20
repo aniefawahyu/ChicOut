@@ -18,6 +18,7 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Htran;
 use App\Models\Dtran;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -52,6 +53,34 @@ class UserController extends Controller
             $param["listItem"] = $listItem;
             $param["listMerch"] = $listMerch;
             $param["selectedCategory"] = $category;
+
+            $categoryQuery = $categoryName == 'Men' ? 'mens-shirts' : 'womens-dresses';
+            $response = Http::get('https://dummyjson.com/products/category/' . $categoryQuery);
+
+            if (!$response->ok()) {
+                return redirect()->route('category');
+            }
+
+            $currencyResponse = Http::get('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+
+            if (!$currencyResponse->ok()) {
+                return redirect()->route('category');
+            }
+
+            $idrMultiplier = $currencyResponse->json()['usd']['idr'];
+
+            foreach ($response->json()['products'] as $product) {
+                $item = new Item();
+                $item->ID_items = $product['id'];
+                $item->name = $product['title'];
+                $item->img = $product['images'][0];
+                $item->description = $product['description'];
+                $item->stock = $product['stock'];
+                $item->price = $product['price'] * $idrMultiplier;
+                $item->discount = $product['discountPercentage'];
+                $item->ID_categories = $category['ID_categories'];
+                $param['listCollaborationItem'][] = $item;
+            }
 
             return view("user.category", $param);
         } else {
@@ -143,6 +172,58 @@ class UserController extends Controller
             return redirect()->back()->with('sukses', 'Comment deleted successfully!');
         } else {
             return redirect()->back();
+        }
+    }
+
+    public function getCollaborationDetailPage(Request $req)
+    {
+        $itemResponse = Http::get('https://dummyjson.com/products/' . $req->id);
+
+        if (!$itemResponse->ok()) {
+            return redirect()->route('home');
+        }
+
+        $product = $itemResponse->json();
+
+        $currencyResponse = Http::get('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+
+        if (!$currencyResponse->ok()) {
+            return redirect()->route('home');
+        }
+
+        $idrMultiplier = $currencyResponse->json()['usd']['idr'];
+
+        $selectedItem = new Item();
+        $selectedItem->ID_items = $product['id'];
+        $selectedItem->name = $product['title'];
+        $selectedItem->img = $product['images'][0];
+        $selectedItem->description = $product['description'];
+        $selectedItem->stock = $product['stock'];
+        $selectedItem->price = $product['price'] * $idrMultiplier;
+        $selectedItem->discount = $product['discountPercentage'];
+        $selectedItem->ID_categories = $req->categoryId;
+
+        if ($product) {
+            $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+            $itemReviews = [];
+            $averageRate = $product['rating'];
+
+            if (Auth::check()) {
+                $buyed = Dtran::where('ID_items', $req->id)
+                    ->whereHas('Htrans', function ($query) {
+                        $query->where('username', Auth::user()->username);
+                    })
+                    ->exists();
+                $param["buyed"] = $buyed;
+            }
+            $param["averageRate"] = $averageRate ?: 0;
+            $param["itemReviews"] = $itemReviews;
+            $param["selectedItem"] = $selectedItem;
+            $param["listMerch"] = $listMerch;
+
+            return view("user.detail", $param);
+        } else {
+            return redirect()->route('home');
         }
     }
 
