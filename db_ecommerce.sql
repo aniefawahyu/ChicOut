@@ -143,6 +143,7 @@ CREATE TABLE `htrans` (
   `purchase_date` datetime DEFAULT current_timestamp(),
   `total` int(11) NOT NULL,
   `address` text NOT NULL,
+  `status` varchar(255) DEFAULT `unpaid`,
   PRIMARY KEY (`ID_htrans`),
   KEY `username` (`username`),
   KEY `ID_payments` (`ID_payments`),
