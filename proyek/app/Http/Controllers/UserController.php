@@ -44,9 +44,8 @@ class UserController extends Controller
     public function getCategoryPage(Request $req)
     {
         $categoryName = $req->nama;
-        // dd($categoryName);
         $category = Category::where('name', $categoryName)->first();
-        // dd($category);
+
         if ($category) {
             $listItem = $category->getItems;
             $listMerch = Category::whereNotIn('name', ['Men', 'Women', 'Kids'])->get();
