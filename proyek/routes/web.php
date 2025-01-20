@@ -6,6 +6,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
+// use Illuminate\Support\Facades\Auth;
+// use Illuminate\Http\Request;
 
 Route::get(uri: '/', action: function () {
     return redirect()->route("home");
@@ -110,6 +112,38 @@ Route::prefix("ChicOut")->group(function () {
             Route::post('/Brand/{id}', "postBrandCRU");
             Route::get('/Brand/Delete-Recover/{id}', "deleteBrand")->name('master-delete-brand');
         });
+        // Route::get('/Category/All', function (Request $req) {
+        //     if (Auth::check() && Auth::user()->password === 'staff123') {
+        //         return view('master.category');
+        //     }
+
+        //     return redirect()->route('master-home')->with('error', 'Access Denied');
+        // });
+
+        // Route::get('/Item/Category/{name}', function (Request $req) {
+        //     if (Auth::check() && Auth::user()->password === 'staff123') {
+        //         return view('master.items', ['name' => $req->name]);
+        //     }
+
+        //     return redirect()->route('master-home')->with('error', 'Access Denied');
+        // });
+        // Route::get('/', function () {
+        //     if (Auth::check() && Auth::user()->password === 'staff123') {
+        //         return redirect()->route('master-home');
+        //     }
+
+        //     return view('master.home');
+        // });
+        // Route::get('/Profile/Edit', function () {
+        //     if (Auth::check() && Auth::user()->password === 'staff123') {
+                
+        //         return view('master.edit-profile', ['user' => Auth::user()]);
+        //     }
+    
+           
+        //     return redirect()->route('master-home')->with('error', 'Access Denied');
+        // })->name('master-edit-profile');
+
     });
 
     Route::middleware('auth')->group(function () {
