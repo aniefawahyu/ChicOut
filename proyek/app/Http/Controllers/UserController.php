@@ -18,11 +18,8 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Htran;
 use App\Models\Dtran;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Http;
-=======
 use App\Models\Retur;
->>>>>>> Stashed changes
 
 class UserController extends Controller
 {
@@ -245,10 +242,11 @@ class UserController extends Controller
         return view("user.cart", $param);
     }
 
-    public function postCartPage(Request $req) {
+    public function postCartPage(Request $req)
+    {
         if ($req->has("clear")) {
             Auth::user()->getCart()->delete();
-        } else if ($req->has("delete")){
+        } else if ($req->has("delete")) {
             $cartItem = Cart::find($req->delete);
             if ($cartItem) {
                 $cartItem->delete();
@@ -257,7 +255,7 @@ class UserController extends Controller
             $stockNotEnough = false;
             $listCart = Auth::user()->getCart;
             foreach ($listCart as $item) {
-                if ($item->Item->stock - $item->qty < 0 ) {
+                if ($item->Item->stock - $item->qty < 0) {
                     $stockNotEnough = true;
                     if ($item->Item->stock != 0) {
                         $item->update(["qty" => $item->Item->stock]);
@@ -282,10 +280,12 @@ class UserController extends Controller
                     $total += $subtotal;
                 }
             }
-            $htrans = Htran::create(["username" => Auth::user()->username,
-                        "ID_payments" => $req->pay,
-                        "total" => $total,
-                        "address" => Auth::user()->address]);
+            $htrans = Htran::create([
+                "username" => Auth::user()->username,
+                "ID_payments" => $req->pay,
+                "total" => $total,
+                "address" => Auth::user()->address
+            ]);
             $ID_htrans = $htrans->ID_htrans;
             if ($htrans) {
                 foreach ($listCart as $item) {
@@ -294,14 +294,15 @@ class UserController extends Controller
                         $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
                     } else {
                         $subtotal = $item->Item->price * $item->qty;
-
                     }
-                    Dtran::create(["ID_htrans" => $ID_htrans,
-                                "ID_items" => $item->Item->ID_items,
-                                "qty" => $item->qty,
-                                "price" => $item->Item->price,
-                                "discount" => $item->Item->discount,
-                                "subtotal" => $subtotal]);
+                    Dtran::create([
+                        "ID_htrans" => $ID_htrans,
+                        "ID_items" => $item->Item->ID_items,
+                        "qty" => $item->qty,
+                        "price" => $item->Item->price,
+                        "discount" => $item->Item->discount,
+                        "subtotal" => $subtotal
+                    ]);
                     $product = Item::where('ID_items', $item->Item->ID_items)->first();
                     $product->update(["stock" => $product->stock - $item->qty]);
                 }
@@ -474,7 +475,4 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Return processed successfully!');
     }
-
-
-
 }
