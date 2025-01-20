@@ -38,8 +38,6 @@ ChicOut - Cart
 @endsection
 
 
-
-
 @section('content')
 
     <br><br><br><br><br>
