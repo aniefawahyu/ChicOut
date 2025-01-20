@@ -18,11 +18,8 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Htran;
 use App\Models\Dtran;
-<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Http;
-=======
 use App\Models\Retur;
->>>>>>> Stashed changes
 
 class UserController extends Controller
 {
@@ -181,22 +178,32 @@ class UserController extends Controller
 
     public function getCollaborationDetailPage(Request $req)
     {
+        // Validate input parameters
+        $req->validate([
+            'id' => 'required|numeric',
+            'categoryId' => 'required|numeric',
+        ]);
+
+        // Fetch product details from the external API
         $itemResponse = Http::get('https://dummyjson.com/products/' . $req->id);
 
         if (!$itemResponse->ok()) {
-            return redirect()->route('home');
+            return redirect()->route('home')->withErrors('Failed to fetch product details. Please try again later.');
         }
 
         $product = $itemResponse->json();
 
+        // Fetch currency exchange rates
         $currencyResponse = Http::get('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
 
         if (!$currencyResponse->ok()) {
-            return redirect()->route('home');
+            return redirect()->route('home')->withErrors('Failed to fetch currency conversion rates. Please try again later.');
         }
 
+        // Convert price to IDR
         $idrMultiplier = $currencyResponse->json()['usd']['idr'];
 
+        // Map product data to the Item model
         $selectedItem = new Item();
         $selectedItem->ID_items = $product['id'];
         $selectedItem->name = $product['title'];
@@ -207,29 +214,29 @@ class UserController extends Controller
         $selectedItem->discount = $product['discountPercentage'];
         $selectedItem->ID_categories = $req->categoryId;
 
-        if ($product) {
-            $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
-            $itemReviews = [];
-            $averageRate = $product['rating'];
+        // Prepare additional data for the view
+        $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+        $averageRate = $product['rating'] ?? 0;
 
-            if (Auth::check()) {
-                $buyed = Dtran::where('ID_items', $req->id)
-                    ->whereHas('Htrans', function ($query) {
-                        $query->where('username', Auth::user()->username);
-                    })
-                    ->exists();
-                $param["buyed"] = $buyed;
-            }
-            $param["averageRate"] = $averageRate ?: 0;
-            $param["itemReviews"] = $itemReviews;
-            $param["selectedItem"] = $selectedItem;
-            $param["listMerch"] = $listMerch;
+        $param = [
+            'selectedItem' => $selectedItem,
+            'listMerch' => $listMerch,
+            'averageRate' => $averageRate,
+            'itemReviews' => [], // Reviews not available for dummy API products
+        ];
 
-            return view("user.detail", $param);
-        } else {
-            return redirect()->route('home');
+        if (Auth::check()) {
+            $buyed = Dtran::where('ID_items', $req->id)
+                ->whereHas('Htrans', function ($query) {
+                    $query->where('username', Auth::user()->username);
+                })
+                ->exists();
+            $param['buyed'] = $buyed;
         }
+
+        return view('user.detail', $param);
     }
+
 
     public function getCartPage()
     {
@@ -246,10 +253,11 @@ class UserController extends Controller
         return view("user.cart", $param);
     }
 
-    public function postCartPage(Request $req) {
+    public function postCartPage(Request $req)
+    {
         if ($req->has("clear")) {
             Auth::user()->getCart()->delete();
-        } else if ($req->has("delete")){
+        } else if ($req->has("delete")) {
             $cartItem = Cart::find($req->delete);
             if ($cartItem) {
                 $cartItem->delete();
@@ -258,7 +266,7 @@ class UserController extends Controller
             $stockNotEnough = false;
             $listCart = Auth::user()->getCart;
             foreach ($listCart as $item) {
-                if ($item->Item->stock - $item->qty < 0 ) {
+                if ($item->Item->stock - $item->qty < 0) {
                     $stockNotEnough = true;
                     if ($item->Item->stock != 0) {
                         $item->update(["qty" => $item->Item->stock]);
@@ -283,10 +291,12 @@ class UserController extends Controller
                     $total += $subtotal;
                 }
             }
-            $htrans = Htran::create(["username" => Auth::user()->username,
-                        "ID_payments" => $req->pay,
-                        "total" => $total,
-                        "address" => Auth::user()->address]);
+            $htrans = Htran::create([
+                "username" => Auth::user()->username,
+                "ID_payments" => $req->pay,
+                "total" => $total,
+                "address" => Auth::user()->address
+            ]);
             $ID_htrans = $htrans->ID_htrans;
             if ($htrans) {
                 foreach ($listCart as $item) {
@@ -295,14 +305,15 @@ class UserController extends Controller
                         $subtotal = floor($item->Item->price - ($item->Item->price * $item->Item->discount / 100)) * $item->qty;
                     } else {
                         $subtotal = $item->Item->price * $item->qty;
-
                     }
-                    Dtran::create(["ID_htrans" => $ID_htrans,
-                                "ID_items" => $item->Item->ID_items,
-                                "qty" => $item->qty,
-                                "price" => $item->Item->price,
-                                "discount" => $item->Item->discount,
-                                "subtotal" => $subtotal]);
+                    Dtran::create([
+                        "ID_htrans" => $ID_htrans,
+                        "ID_items" => $item->Item->ID_items,
+                        "qty" => $item->qty,
+                        "price" => $item->Item->price,
+                        "discount" => $item->Item->discount,
+                        "subtotal" => $subtotal
+                    ]);
                     $product = Item::where('ID_items', $item->Item->ID_items)->first();
                     $product->update(["stock" => $product->stock - $item->qty]);
                 }
@@ -475,7 +486,4 @@ class UserController extends Controller
 
         return redirect()->back()->with('success', 'Return processed successfully!');
     }
-
-
-
 }
