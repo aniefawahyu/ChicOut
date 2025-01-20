@@ -1,0 +1,10 @@
+{
+    "require": {
+        "maatwebsite/excel": "*"
+    },
+    "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": false
+        }
+    }
+}

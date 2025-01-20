@@ -37,6 +37,9 @@
     <li>
         <a href="{{ route('master-profile') }}">Profile</a>
     </li>
+    <li>
+        <a href="{{ route('master-profile') }}">LogOut</a>
+    </li>
 @endsection
 
 @section('content')

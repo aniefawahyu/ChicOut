@@ -43,7 +43,7 @@
 @section('content')
     <div class="container" style="margin-top: 10%">
         <div class="page">
-            <a href="{{ route('logout') }}" class="btn btn-danger"><i class="icon-log-out"></i></a>
+            <a href="{{ route('logout') }}" class="btn btn-danger"><b>Logout</b></a>
             @if ($errors->any())
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -124,7 +124,7 @@
                                     value="{{ Auth::user()->address }}">
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-success"><i class="icon-save"></i></button>
+                            <button type="submit" class="btn btn-success">Update</button>
                             <br><br>
                         </form>
                     </form>

@@ -1,6 +1,6 @@
 @extends('layout.crud')
 @section('title')
- Accounts
+    Chicout - Accounts
 @endsection
 
 @section('menu')

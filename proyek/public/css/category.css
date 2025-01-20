@@ -884,7 +884,7 @@ figure {
 /* CSS untuk membuat card tetap memiliki ukuran yang sama */
 .custom-card {
     width: 100%;
-    height: 73rem;
+    height: 40rem;
     overflow: hidden;
     margin-top: 50px;
     border-radius: 10px;

@@ -66,7 +66,7 @@
         </div> <br>
         <table class="table" style="background-color: #1a1814">
             <tr style="font-weight: bold; color: white; border-bottom: 2px solid">
-                <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">ID</th>
+                <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">No</th>
                 <th style="border-right: 2px solid; text-align: center">Name</th>
                 <th style="border-right: 2px solid; text-align: center">Image</th>
                 <th style="border-right: 2px solid; text-align: center">Action</th>
@@ -89,9 +89,9 @@
                                 <a class="btn btn-primary"
                                     href="{{ route('master-category-cru', ['id' => $i->ID_categories]) }}" title="Update {{$i->name}}"><i
                                     class="icon-pencil"></i></a>
-                                <a class="btn btn-danger"
+                                {{-- <a class="btn btn-danger"
                                     href="{{ route('master-delete-category', ['id' => $i->ID_categories]) }}" title="Delete {{$i->name}}"><i
-                                    class="icon-trash2"></i></a>
+                                    class="icon-trash2"></i></a> --}}
                             @else
                                 <div>
                                     <a style="margin: auto 0" class="btn btn-primary"

@@ -26,12 +26,6 @@ Route::prefix("ChicOut")->group(function () {
             return redirect('ChicOut/Category/Men');
         })->name('category');
 
-        // Route::get('/Category/{nama}', "getCategoryPage");
-
-        // Route::get('ChicOut/Category/{categoryName}', 'getCategoryPage')
-        // ->where('categoryName', '[A-Za-z]+')
-        // ->name('category.dynamic');
-
         Route::get('/Item/{id}', "getDetailPage")->name('detail');
         Route::post('/Item/{id}', "postDetailPage")->middleware("custom:user,master");
 
@@ -40,7 +34,7 @@ Route::prefix("ChicOut")->group(function () {
         Route::get('/Category/{nama}', "getCategoryPage");
 
         Route::get('/Cart', "getCartPage")->middleware("custom:user,master")->name('cart');
-        Route::post('/Cart', "postCartPage")->name('cart');
+        Route::post('/Cart', "postCartPage");
 
         Route::get('/update-cart', function () {
             return redirect()->route('cart');
@@ -51,6 +45,10 @@ Route::prefix("ChicOut")->group(function () {
         Route::post('/Profile', "postProfilePage")->middleware("custom:user,master");
 
         Route::get('/Profile/History/{id}', "getDtrans")->middleware("custom:user,master")->name('dtrans');
+
+        Route::get('/return-items/{id}', 'showReturnForm')->name('return-items');
+        Route::post('/return', 'processReturn')->name('process-return');
+
     });
 
     Route::controller(TransactionController::class)->group(function () {
@@ -103,6 +101,14 @@ Route::prefix("ChicOut")->group(function () {
 
             Route::get('/Profile', "getProfile")->name('master-profile');
             Route::post('/Profile', "postProfile");
+            
+            Route::get('/Brand', function () {
+                return redirect()->route('master-brand');
+            });
+            Route::get('/Brand/All', "getBrand")->name('master-brand');
+            Route::get('/Brand/{id}', "getBrandCRU")->name('master-brand-cru');
+            Route::post('/Brand/{id}', "postBrandCRU");
+            Route::get('/Brand/Delete-Recover/{id}', "deleteBrand")->name('master-delete-brand');
         });
     });
 
