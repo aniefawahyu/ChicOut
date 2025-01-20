@@ -10,7 +10,7 @@
         "arielmejiadev/larapex-charts": "^2.1",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "maatwebsite/excel": "^3.1.62",
+        "maatwebsite/excel": "^1.1.5",
         "midtrans/midtrans-php": "^2.6",
         "symfony/clock": "^7.2"
     },
