@@ -123,7 +123,7 @@ ChicOut - {{$selectedItem->name}}
                             Stock : {{$selectedItem->stock}}
                         </div>
                         <div class="col-md-6">
-                            <button class="btn" type="submit" name="addCart" style="color: black; background-color: greenyellow"><i class="icon-shopping-cart"></i></button>
+                            <button class="btn" type="submit" name="addCart" style="color: black; background-color: greenyellow">🛒</button>
                         </div>
                     </div>
                 </form>

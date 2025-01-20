@@ -2,9 +2,7 @@
 
 namespace Illuminate\Contracts\Support;
 
-use Countable;
-
-interface MessageBag extends Arrayable, Countable
+interface MessageBag extends Arrayable
 {
     /**
      * Get the keys present in the message bag.
@@ -41,8 +39,8 @@ interface MessageBag extends Arrayable, Countable
     /**
      * Get the first message from the bag for a given key.
      *
-     * @param  string|null  $key
-     * @param  string|null  $format
+     * @param  string  $key
+     * @param  string  $format
      * @return string
      */
     public function first($key = null, $format = null);
@@ -51,7 +49,7 @@ interface MessageBag extends Arrayable, Countable
      * Get all of the messages from the bag for a given key.
      *
      * @param  string  $key
-     * @param  string|null  $format
+     * @param  string  $format
      * @return array
      */
     public function get($key, $format = null);
@@ -59,18 +57,10 @@ interface MessageBag extends Arrayable, Countable
     /**
      * Get all of the messages for every key in the bag.
      *
-     * @param  string|null  $format
+     * @param  string  $format
      * @return array
      */
     public function all($format = null);
-
-    /**
-     * Remove a message from the bag.
-     *
-     * @param  string  $key
-     * @return $this
-     */
-    public function forget($key);
 
     /**
      * Get the raw messages in the container.
@@ -107,4 +97,11 @@ interface MessageBag extends Arrayable, Countable
      * @return bool
      */
     public function isNotEmpty();
+
+    /**
+     * Get the number of messages in the container.
+     *
+     * @return int
+     */
+    public function count();
 }

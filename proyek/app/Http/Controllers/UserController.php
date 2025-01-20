@@ -18,7 +18,11 @@ use App\Models\Cart;
 use App\Models\Payment;
 use App\Models\Htran;
 use App\Models\Dtran;
+<<<<<<< Updated upstream
 use Illuminate\Support\Facades\Http;
+=======
+use App\Models\Retur;
+>>>>>>> Stashed changes
 
 class UserController extends Controller
 {
@@ -32,7 +36,7 @@ class UserController extends Controller
         $topItemIDs = $topItems->pluck('ID_items')->toArray();
         $bestSeller = Item::whereIn('ID_items', $topItemIDs)->get();
 
-        $listMerch = Category::whereNotIn('name', ['Men', 'Women', 'Kids'])->get();
+        $listMerch = Category::whereNotIn('name', ['Men', 'Women'])->get();
         $listItem = Item::all();
 
         $param["bestSeller"] = $bestSeller;
@@ -341,7 +345,7 @@ class UserController extends Controller
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
-        // $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+        // $listMerch = Category::whereNotIn('name', ['Men', 'Women'])->get();
         // $param["listMerch"] = $listMerch;
         $param["myReviews"] = Auth::user()->myReviews;
         $param["listHtrans"] = Auth::user()->getHtrans;
@@ -350,7 +354,7 @@ class UserController extends Controller
 
     public function postProfilePage(Request $req)
     {
-        $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+        $listMerch = Category::whereNotIn('name', ['Men', 'Women'])->get();
         $param["listMerch"] = $listMerch;
         $param["myReviews"] = Auth::user()->myReviews;
 
@@ -423,7 +427,7 @@ class UserController extends Controller
         if (Auth::user()->role == "master") {
             return redirect()->route('master-home');
         }
-        $listMerch = Category::whereNotIn('name', ['Food', 'Drink'])->get();
+        $listMerch = Category::whereNotIn('name', ['Men', 'Women'])->get();
         $param["listMerch"] = $listMerch;
 
         $htrans = Htran::with(['Payment' => function ($query) {
@@ -431,10 +435,47 @@ class UserController extends Controller
         }])->find($req->id);
         if ($htrans) {
             $param["listDtrans"] = $htrans->getDtrans;
+            // dd($param["listDtrans"]);
             $param["htrans"] = $htrans;
             return view("user.history", $param);
         } else {
             return redirect()->route('profile');
         }
     }
+
+    public function showReturnForm(Request $req, $id)
+    {
+        $dtrans = Dtran::with('Item')->find($id);
+
+        if (!$dtrans) {
+            return response()->json(['error' => 'Item not found'], 404);
+        }
+
+        return response()->json([
+            'id' => $dtrans->ID_dtrans,
+            'name' => $dtrans->Item->name,
+            'qty' => $dtrans->qty,
+            'reason' => '', // Placeholder untuk alasan
+        ]);
+    }
+
+    public function processReturn(Request $req)
+    {
+        $validated = $req->validate([
+            'id' => 'required|exists:dtrans,id',
+            'reason' => 'required|string|max:255',
+        ]);
+
+        $retur = Retur::create([
+            'id_pesanan' => $validated['id'],
+            'qty' => Dtran::find($validated['id'])->qty,
+            'alasan' => $validated['reason'],
+            'processed_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Return processed successfully!');
+    }
+
+
+
 }

@@ -132,6 +132,10 @@
 
             <div class="custom-card-history">
                 <h3 class="custom-card-title">Purchase History <br></h3>
+                
+                    {{-- <a href="{{ route('return-items', ['id' => $htrans->ID_htrans]) }}" style="float: right; color:red">Return</a> --}}
+                
+                
                 @if (count($listHtrans) <= 0)
                     <h4 class="custom-card-title">
                         It seems like you haven't made a purchase yet. Start shopping now!

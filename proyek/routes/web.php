@@ -45,6 +45,10 @@ Route::prefix("ChicOut")->group(function () {
         Route::post('/Profile', "postProfilePage")->middleware("custom:user,master");
 
         Route::get('/Profile/History/{id}', "getDtrans")->middleware("custom:user,master")->name('dtrans');
+
+        Route::get('/return-items/{id}', 'showReturnForm')->name('return-items');
+        Route::post('/return', 'processReturn')->name('process-return');
+
     });
 
     Route::controller(TransactionController::class)->group(function () {

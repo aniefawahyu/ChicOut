@@ -2,60 +2,47 @@
 
 namespace Illuminate\Support;
 
+use JsonSerializable;
 use Carbon\Carbon as BaseCarbon;
-use Carbon\CarbonImmutable as BaseCarbonImmutable;
-use Illuminate\Support\Traits\Conditionable;
-use Ramsey\Uuid\Uuid;
-use Symfony\Component\Uid\Ulid;
+use Illuminate\Support\Traits\Macroable;
 
-class Carbon extends BaseCarbon
+class Carbon extends BaseCarbon implements JsonSerializable
 {
-    use Conditionable;
+    use Macroable;
 
     /**
-     * {@inheritdoc}
-     */
-    public static function setTestNow($testNow = null)
-    {
-        BaseCarbon::setTestNow($testNow);
-        BaseCarbonImmutable::setTestNow($testNow);
-    }
-
-    /**
-     * Create a Carbon instance from a given ordered UUID or ULID.
+     * The custom Carbon JSON serializer.
      *
-     * @param  \Ramsey\Uuid\Uuid|\Symfony\Component\Uid\Ulid|string  $id
-     * @return \Illuminate\Support\Carbon
+     * @var callable|null
      */
-    public static function createFromId($id)
+    protected static $serializer;
+
+    /**
+     * Prepare the object for JSON serialization.
+     *
+     * @return array|string
+     */
+    public function jsonSerialize()
     {
-        if (is_string($id)) {
-            $id = Ulid::isValid($id) ? Ulid::fromString($id) : Uuid::fromString($id);
+        if (static::$serializer) {
+            return call_user_func(static::$serializer, $this);
         }
 
-        return static::createFromInterface($id->getDateTime());
+        $carbon = $this;
+
+        return call_user_func(function () use ($carbon) {
+            return get_object_vars($carbon);
+        });
     }
 
     /**
-     * Dump the instance and end the script.
+     * JSON serialize all Carbon instances using the given callback.
      *
-     * @param  mixed  ...$args
-     * @return never
+     * @param  callable  $callback
+     * @return void
      */
-    public function dd(...$args)
+    public static function serializeUsing($callback)
     {
-        dd($this, ...$args);
-    }
-
-    /**
-     * Dump the instance.
-     *
-     * @return $this
-     */
-    public function dump()
-    {
-        dump($this);
-
-        return $this;
+        static::$serializer = $callback;
     }
 }
