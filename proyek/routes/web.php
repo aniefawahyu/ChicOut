@@ -32,6 +32,7 @@ Route::prefix("ChicOut")->group(function () {
         Route::post('/Item/{id}', "postDetailPage")->middleware("custom:user,master");
 
         Route::get('/Item/collaboration/{categoryId}/{id}', "getCollaborationDetailPage")->name('collaboration-detail');
+        Route::post('/Item/collaboration/{categoryId}/{id}', "postCollaborationDetailPage")->middleware("custom:user,master");
 
         Route::get('/Category/{nama}', "getCategoryPage");
 
