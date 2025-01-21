@@ -50,7 +50,6 @@ Route::prefix("ChicOut")->group(function () {
 
         Route::get('/return-items/{id}', 'showReturnForm')->name('return-items');
         Route::post('/return', 'processReturn')->name('process-return');
-
     });
 
     Route::controller(TransactionController::class)->group(function () {
@@ -103,7 +102,7 @@ Route::prefix("ChicOut")->group(function () {
 
             Route::get('/Profile', "getProfile")->name('master-profile');
             Route::post('/Profile', "postProfile");
-            
+
             Route::get('/Brand', function () {
                 return redirect()->route('master-brand');
             });
@@ -136,11 +135,11 @@ Route::prefix("ChicOut")->group(function () {
         // });
         // Route::get('/Profile/Edit', function () {
         //     if (Auth::check() && Auth::user()->password === 'staff123') {
-                
+
         //         return view('master.edit-profile', ['user' => Auth::user()]);
         //     }
-    
-           
+
+
         //     return redirect()->route('master-home')->with('error', 'Access Denied');
         // })->name('master-edit-profile');
 

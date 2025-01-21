@@ -20,6 +20,7 @@ use Carbon\Carbon;
 
 use App\Charts\PieChartTopSellingCategory;
 use App\Charts\LineChartTotalIncome;
+use App\Models\Brand;
 
 class MasterController extends Controller
 {
@@ -123,6 +124,15 @@ class MasterController extends Controller
         $param["listItem"] = $listItem;
         $param["listCategory"] = Category::all();
         return view('master.item-show', $param);
+    }
+
+    public function getBrand(Request $req)
+    {
+        $listBrands = Brand::withTrashed()->paginate(10);
+
+        $param["listBrandWithTrashed"] = $listBrands;
+        $param["listCategory"] = Category::all();
+        return view('master.brand-show', $param);
     }
 
     public function getInsertUpdate(Request $req)
