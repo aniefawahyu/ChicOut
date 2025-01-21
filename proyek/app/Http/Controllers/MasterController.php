@@ -190,6 +190,22 @@ class MasterController extends Controller
         }
     }
 
+    public function deleteBrand(Request $req)
+    {
+        $brand = Brand::withTrashed()->find($req->id);
+        if ($brand != null) {
+            if ($brand->trashed()) {
+                $brand->restore();
+                return redirect()->route('master-brand', ['name' => 'All'])->with("sukses", 'Brand restored successfully!');
+            } else {
+                $brand->delete();
+                return redirect()->route('master-brand', ['name' => 'All'])->with("sukses", 'Brand deleted successfully!');
+            }
+        } else {
+            return redirect()->route('master-brand');
+        }
+    }
+
     public function getInsertUpdate(Request $req)
     {
         $item = Item::find($req->id);
