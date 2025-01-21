@@ -107,8 +107,10 @@ Route::prefix("ChicOut")->group(function () {
                 return redirect()->route('master-brand');
             });
             Route::get('/Brand/All', "getBrand")->name('master-brand');
+
             Route::get('/Brand/{id}', "getBrandCRU")->name('master-brand-cru');
             Route::post('/Brand/{id}', "postBrandCRU");
+
             Route::get('/Brand/Delete-Recover/{id}', "deleteBrand")->name('master-delete-brand');
         });
         // Route::get('/Category/All', function (Request $req) {

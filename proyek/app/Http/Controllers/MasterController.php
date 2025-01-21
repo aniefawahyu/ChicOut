@@ -135,6 +135,61 @@ class MasterController extends Controller
         return view('master.brand-show', $param);
     }
 
+    public function getBrandCRU(Request $req)
+    {
+        $brand = Brand::find($req->id);
+        $param["listCategory"] = Category::all();
+        if ($req->id == "Insert") {
+            $param["brand"] = null;
+            return view("master.brand-insert-update", $param);
+        } else if ($brand != null) {
+            $param["brand"] = $brand;
+            return view("master.brand-insert-update", $param);
+        } else {
+            return redirect()->route('master-brand', ['name' => 'All']);
+        }
+    }
+
+    public function postBrandCRU(Request $req)
+    {
+        // dd($req->all());
+        $rules = [
+            'name' => 'required|string|max:255',
+            'logo' => 'required',
+            'description' => 'required|string',
+            'premium' => 'in:on,off',
+        ];
+        $messages = [
+            'name.required' => 'The name field is required.',
+            'logo.required' => 'The logo field is required.',
+            'description.required' => 'The description field is required.',
+        ];
+        $validator = Validator::make($req->all(), $rules, $messages)->validate();
+
+
+        $brand = Brand::find($req->id);
+        if ($req->has("add")) {
+            // dd($req->name);
+            $res = Brand::create([
+                "name" => $req->name,
+                "logo" => $req->logo,
+                "description" => $req->description,
+                "premium" => $req->premium == "on" ? true : false,
+            ]);
+            return redirect()->route('master-brand', ['name' => 'All'])->with("sukses", 'Brand added successfully!');
+        } else if ($req->has("save") && $brand != null) {
+            $brand->update([
+                "name" => $req->name,
+                "logo" => $req->logo,
+                "description" => $req->description,
+                "premium" => $req->premium == "on" ? true : false,
+            ]);
+            return redirect()->route('master-brand', ['name' => 'All'])->with("sukses", 'Brand updated successfully!');
+        } else {
+            return redirect()->route('master-brand', ['name' => 'All']);
+        }
+    }
+
     public function getInsertUpdate(Request $req)
     {
         $item = Item::find($req->id);

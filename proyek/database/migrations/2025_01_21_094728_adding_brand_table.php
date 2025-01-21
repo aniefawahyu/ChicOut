@@ -13,7 +13,7 @@ return new class extends Migration
     {
         //
         Schema::create('brands', function (Blueprint $table) {
-            $table->id("ID_brands");
+            $table->id("ID_brands")->autoIncrement();
             $table->string("name")->unique();
             $table->string("logo");
             $table->text("description")->nullable();

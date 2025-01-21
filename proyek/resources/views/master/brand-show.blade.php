@@ -72,6 +72,8 @@ ChicOut - Brands
             <th style="border-right: 2px solid; border-left: 2px solid; text-align: center">ID</th>
             <th style="border-right: 2px solid; text-align: center">Name</th>
             <th style="border-right: 2px solid; text-align: center">Logo</th>
+            <th style="border-right: 2px solid; text-align: center">Description</th>
+            <th style="border-right: 2px solid; text-align: center">Premium</th>
             <th style="border-right: 2px solid; text-align: center">Action</th>
         </tr>
         @foreach ($listBrandWithTrashed as $b)
@@ -79,7 +81,15 @@ ChicOut - Brands
             <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">{{ $b->ID_brands }}</td>
             <td style="border-right: 2px solid; vertical-align: middle">{{ $b->name }}</td>
             <td style="border-right: 2px solid; vertical-align: middle"><img src="{{ $b->logo }}" alt="{{ $b->name }}" width="100px"></td>
+            <td style="border-right: 2px solid; vertical-align: middle">{{ $b->description }}</td>
             <td style="border-right: 2px solid; vertical-align: middle">
+                @if ($b->premium)
+                <i class="icon-check"></i>
+                @else
+                <i class=" icon-cross"></i>
+                @endif
+            </td>
+            <td style=" border-right: 2px solid; vertical-align: middle">
                 @if ($b->trashed())
                 <a class="btn btn-warning" href="{{ route('master-delete-brand', ['id' => $b->ID_brands]) }}" title="Restore {{ $b->name }}">
                     <i class="icon-folder2"></i>
