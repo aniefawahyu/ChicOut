@@ -30,18 +30,36 @@ Kami menggunakan API:
 5. Customer dapat melihat riwayat pembelian dari menu profil. 
 
 ### Staff Show:  
-1. Staff karyawan dapat melakukan konfirmasi refund.  
-2. Mengatur stok barang.  
-3. Melakukan CRUD (Create, Read, Update, Delete) Items.  
-4. Melakukan CRUD Category.  
-5. Edit profil.
+1. Mengatur stok barang.  
+2. Melakukan CRUD (Create, Read, Update, Delete) Items.  
+3. Melakukan CRUD Category.  
+4. Edit profil.
 
 ### Admin Show:  
 1. Admin dapat melihat laporan penjualan dengan tampilan grafik dan dapat mencetak dalam format Excel.  
 2. Admin dapat melakukan CRUD Items di semua kategori.  
-3. Admin dapat melakukan CRUD kategori.  
-4. Admin dapat mengubah role pengguna / karyawan.  
-5. Admin dapat menyimpan daftar produk secara lokal dan mengunduhnya dalam bentuk file Excel.  
-6. Edit profil.
+3. Admin dapat melakukan CRUD kategori.
+4. Admin dapat melakukan CRUD brand.  
+5. Admin dapat mengubah role pengguna / karyawan.  
+6. Admin dapat menyimpan daftar produk secara lokal dan mengunduhnya dalam bentuk file Excel.  
+7. Edit profil.
 
----
+### Cara Penggunaan
+
+## User
+- User / Guest sebelum melakukan login dapat melihat semua list item yang ada namun tidak dapat melakukan transaksi pembelian. User / Guest dapat login jika sudah terdaftar jika belum maka user dapat melakukan registrasi terlebih dahulu kemudian login.
+- Pada saat login user dapat memasukan username dan password yang digunakan pada saat registrasi, user dapat melakukan pembelian dengan memasukan barang ke dalam cart, dan bisa melakukan transaksi pembelian dengan midtrans. User yang sudah membeli barang, dapat memberikan review/ulasan pada halaman barang yang telah dibeli. User juga dapat melihat history/riwayat pembeliannya serta dapat melakukan retur barang.
+
+## Admin
+- Admin dapat melakukan pengecekan transaksi menggunakan chart yang sudah terintegrasi dengan transaksi yang dilakukan user dan dapat mengunduhnya dalam bentuk file excel, kemudian dapat melihat semua daftar transaksi yang pernah dilakukan semua user di halaman home
+- Pada halaman item, admin dapat menambah, mengedit, dan menghapus barang. Untuk menambah barang baru, admin harus mengisi form tambah barang baru yang berisi nama barang, quantity, deskripsi, harga, discount, serta link gambar yang sesuai.
+- Pada halaman category, admin dapat menambah, mengedit, dan menghapus kategori dengan mengisi form tambah kategori baru yang berisi nama kategori dan link gambar yang sesuai.
+- Pada halaman payment, admin dapat menambah, mengedit, dan menghapus payment dengan mengisi form tambah payment baru yang berisi jenis pembayaran, nomor rekening serta logo payment.
+- Pada halaman brand, admin dapat menambah, mengedit, dan menghapus brand dengan mengisi form tambah brand baru yang berisi nama brand, serta logo payment.
+- Admin juga dapat mengubah role user dan melihat detail profilenya.
+
+## Staff
+- Staff dapat melihat riwayat transaksi yang dilakukan semua user
+- Pada halaman item, admin dapat menambah, mengedit, dan menghapus barang. Untuk menambah barang baru, admin harus mengisi form tambah barang baru yang berisi nama barang, quantity, deskripsi, harga, discount, serta link gambar yang sesuai.
+- Pada halaman category, admin dapat menambah, mengedit, dan menghapus kategori dengan mengisi form tambah kategori baru yang berisi nama kategori dan link gambar yang sesuai.
+- Pada halaman profile, staff dapat mengedit data pribadi yang berisi nama, nomor telepon.
