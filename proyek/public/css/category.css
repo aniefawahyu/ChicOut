@@ -3,8 +3,8 @@ body {
     font-weight: 400;
     font-size: 18px;
     line-height: 1.7;
-    color: rgba(255, 255, 255, 0.3);
-    background-color: #000;
+    color: rgb(255, 255, 255);
+    background-color: #f7f1f1;
     /* background: linear-gradient(to bottom, #000000, #000000, #878792); */
 }
 
