@@ -178,10 +178,10 @@ class UserController extends Controller
     public function getCollaborationDetailPage(Request $req)
     {
         // Validate input parameters
-        $req->validate([
-            'id' => 'required|numeric',
-            'categoryId' => 'required|numeric',
-        ]);
+        // $req->validate([
+        //     'id' => 'required|numeric',
+        //     'categoryId' => 'required|numeric',
+        // ]);
 
         // Fetch product details from the external API
         $itemResponse = Http::get('https://dummyjson.com/products/' . $req->id);
@@ -234,6 +234,101 @@ class UserController extends Controller
         }
 
         return view('user.detail', $param);
+    }
+
+    public function postCollaborationDetailPage(Request $req)
+    {
+        $collaborationItem = Item::where('collaboration_id', $req->id)->first();
+
+        if (!$collaborationItem) {
+            // Fetch product details from the external API
+            $itemResponse = Http::get('https://dummyjson.com/products/' . $req->id);
+
+            if (!$itemResponse->ok()) {
+                return redirect()->route('home')->withErrors('Failed to fetch product details. Please try again later.');
+            }
+
+            $product = $itemResponse->json();
+
+            // Fetch currency exchange rates
+            $currencyResponse = Http::get('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json');
+
+            if (!$currencyResponse->ok()) {
+                return redirect()->route('home')->withErrors('Failed to fetch currency conversion rates. Please try again later.');
+            }
+
+            // Convert price to IDR
+            $idrMultiplier = $currencyResponse->json()['usd']['idr'];
+
+            // Map product data to the Item model
+            $collaborationItem = new Item();
+            $collaborationItem->name = $product['title'];
+            $collaborationItem->img = $product['images'][0];
+            $collaborationItem->description = $product['description'];
+            $collaborationItem->stock = $product['stock'];
+            $collaborationItem->price = $product['price'] * $idrMultiplier;
+            $collaborationItem->discount = $product['discountPercentage'];
+            $collaborationItem->ID_categories = $req->categoryId;
+            $collaborationItem->collaboration_id = $req->id;
+            $collaborationItem->save();
+        }
+
+        $collaborationItem = Item::where('collaboration_id', $req->id)->first();
+        // dd($collaborationItem);
+        if ($req->has("addCart")) {
+            $listCart = Auth::user()->getCart;
+            if ($listCart->contains('ID_items', $collaborationItem->ID_items)) {
+                $existingCartItem = $listCart->where('ID_items', $collaborationItem->ID_items)->first();
+
+                // Calculate available stock
+                $availableStock = $collaborationItem->stock - ($existingCartItem->qty + $req->qty);
+                if ($availableStock >= 0) {
+                    // Update the quantity in the cart
+                    $existingCartItem->update([
+                        'qty' => $existingCartItem->qty + $req->qty
+                    ]);
+                    return redirect()->route('cart');
+                } else {
+                    // Return to detail page with a message
+                    return redirect()->route('collaboration-detail', ['id' => $req->id, 'categoryId' => $req->categoryId])->with("pesan", "Cannot add more than available stock!");
+                }
+            } else {
+                if ($collaborationItem->stock > 0 && $req->qty <= $collaborationItem->stock && $req->qty > 0) {
+                    Cart::create([
+                        "username" => Auth::user()->username,
+                        "ID_items" => $collaborationItem->ID_items,
+                        "qty" => $req->qty
+                    ]);
+                    return redirect()->route('cart');
+                } else {
+                    return redirect()->route('detail', ['id' => $req->id, 'categoryId' => $req->categoryId])->with("pesan", "Qty tidak boleh 0 dan tidak boleh lebih dari" . $collaborationItem['stock'] . "!");
+                }
+            }
+        } else if ($req->has("postComment")) {
+            $req->validate([
+                'rating' => [
+                    'required',
+                    Rule::in(['1', '2', '3', '4', '5']),
+                ]
+            ], [
+                'rating.required' => 'Please select a rating.',
+            ]);
+
+            $rating = $req->input('rating');
+            $comment = $req->input('comment');
+            Review::create([
+                "username" => Auth::user()->username,
+                "ID_items" => $collaborationItem->ID_items,
+                "rating" => $rating,
+                "comment" => $comment,
+            ]);
+            return redirect()->back()->with('sukses', 'Comment posted successfully!');
+        } else if ($req->has("delete_comment")) {
+            Review::find($req->delete_comment)->delete();
+            return redirect()->back()->with('sukses', 'Comment deleted successfully!');
+        } else {
+            return redirect()->back();
+        }
     }
 
 

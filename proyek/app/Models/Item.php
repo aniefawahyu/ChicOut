@@ -23,13 +23,16 @@ class Item extends Model
         "price",
         "discount",
         "ID_categories",
+        "collaboration_id"
     ];
 
-    public function getReviews() {
+    public function getReviews()
+    {
         return $this->hasMany(Review::class, "ID_items", "ID_items");
     }
 
-    public function Category(){
+    public function Category()
+    {
         return $this->belongsTo(Category::class, "ID_categories", "ID_categories")->withTrashed();
     }
 
@@ -56,5 +59,4 @@ class Item extends Model
         // Return a default value (e.g., 0) if the Dtran relationship is null
         return 0;
     }
-
 }

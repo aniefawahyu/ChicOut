@@ -37,6 +37,23 @@ insert  into `accounts`(`username`,`display_name`,`email`,`password`,`tel`,`addr
 ('asd','asd','asd@gmail.com','$2y$10$hr0ZX5d1kZ4OIwUdPgqmG.gctvq0CuI9is8PHM5tkkxim380Bo8C2','0819829839','Klampis','user'),
 ('admin','admin','admin@gmail.com','$2y$10$CL0haM2/XA/M.mikXw/l0e86Z9Z/w.EYnCk5NahlNVsWSgS7S9d8e','09191283928','ngagel','master');
 
+/*Table structure for table `brands` */
+
+DROP TABLE IF EXISTS `brands`;
+
+CREATE TABLE `brands` (
+  `ID_brands` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci,
+  `premium` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`ID_brands`),
+  UNIQUE KEY `brands_name_unique` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 /*Table structure for table `cart` */
 
 DROP TABLE IF EXISTS `cart`;
@@ -186,6 +203,7 @@ CREATE TABLE `items` (
   `discount` int(11) NOT NULL,
   `ID_categories` int(11) NOT NULL,
   `id_sub_category` int(11) DEFAULT NULL,
+  `collaboration_id` int DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL ON UPDATE current_timestamp(),
   `deleted_at` datetime DEFAULT NULL,
