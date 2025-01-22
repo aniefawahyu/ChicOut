@@ -20,6 +20,9 @@
         <a href="{{ route('master-category') }}">Categories</a>
     </li>
     <li class="active">
+        <a href="{{ route('master-brand') }}">Brands</a>
+    </li>
+    <li class="active">
         <a href="{{ route('master-payment') }}">Payments</a>
     </li>
     <li class="has-dropdown" style="color:rgba(255, 255, 255, 0.7)">

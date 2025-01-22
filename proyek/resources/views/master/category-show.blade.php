@@ -20,6 +20,9 @@
     <li class="active">
         <a href="{{ route('master-category') }}">Categories</a>
     </li>
+    <li class="active">
+        <a href="{{ route('master-brand') }}">Brands</a>
+    </li>
     <li>
         <a href="{{ route('master-payment') }}">Payments</a>
     </li>
