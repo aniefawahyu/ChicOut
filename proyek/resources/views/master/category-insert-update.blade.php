@@ -24,7 +24,7 @@
 <li class="active">
     <a href="{{ route('master-category') }}">Categories</a>
 </li>
-<li class="active">
+<li class="">
     <a href="{{ route('master-brand') }}">Brands</a>
 </li>
 <li>

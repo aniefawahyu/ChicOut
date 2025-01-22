@@ -19,7 +19,7 @@ ChicOut - Master
 <li>
     <a href="{{ route('master-category') }}">Categories</a>
 </li>
-<li class="active">
+<li class="">
     <a href="{{ route('master-brand') }}">Brands</a>
 </li>
 <li>
@@ -107,7 +107,8 @@ ChicOut - Master
         <tr class="text-center" style="color: white; border-bottom: 2px solid">
             <td style="border-right: 2px solid; border-left: 2px solid; vertical-align: middle">
                 <a href="{{ route('master-dtrans', ['id'=>$h->ID_htrans]) }}" style="color: white">
-                    {{$h->Account->display_name}}
+                    {{-- {{$h->Account->display_name}} --}}
+                    {{ $h->Account ? $h->Account->display_name : 'Admin' }}
                 </a>
             </td>
             <td style="border-right: 2px solid; vertical-align: middle">
